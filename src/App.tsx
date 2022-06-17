@@ -1,9 +1,15 @@
-import type { Component } from "solid-js";
-
+import { Outlet } from "solid-app-router";
+import { Component } from "solid-js";
 import styles from "./App.module.css";
+import Sidebar from "./components/Sidebar";
 
 const App: Component = () => {
-  return <div class={styles.App}>webegram is here baby</div>;
+  return (
+    <div class={styles.App}>
+      <Sidebar />
+      <Outlet />
+    </div>
+  );
 };
 
 export default App;
