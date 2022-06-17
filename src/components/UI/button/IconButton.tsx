@@ -1,7 +1,7 @@
 import { Component, mergeProps, splitProps } from "solid-js";
 import styles from "./Button.module.css";
 import { classNames } from "../utils/classNames";
-import { ElementType, HtmlProps } from "../../../types/ui";
+import { ElementType, HtmlProps } from "../../../types/helper";
 
 export type IconButtonProps<C extends ElementType = "button"> = HtmlProps<C>;
 
