@@ -1,0 +1,10 @@
+.UsersList {
+  width: 80%;
+  margin: auto;
+}
+
+.UsersList input {
+  height: 2rem;
+  padding: 3px 8px;
+  font-size: 1.3rem;
+}
