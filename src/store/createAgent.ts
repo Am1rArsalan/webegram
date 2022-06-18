@@ -1,14 +1,33 @@
 import { StoreContextType } from ".";
-import { UserAgent, UserAgentImpl } from "./agent/user-agent/UserAgent";
+import { DirectAgent, DirectAgentImpl } from "./agent/direct-agent/DirectAgent";
+import {
+  ProfileAgent,
+  ProfileAgentImpl,
+} from "./agent/profile-agent/ProfileAgent";
+import { UsersAgent, UsersAgentImpl } from "./agent/users-agent/UsersAgent";
 
-export type Agent = { user: UserAgent };
+export type Agent = {
+  profile: ProfileAgent;
+  users: UsersAgent;
+  directs: DirectAgent;
+};
 
 export default function createAgent([state, actions]: StoreContextType): Agent {
-  const user: UserAgent = new UserAgentImpl(state.token, () => {
+  const profile: ProfileAgent = new ProfileAgentImpl(state.token, () => {
+    actions.logout();
+  });
+
+  const users: UsersAgent = new UsersAgentImpl(state.token, () => {
+    actions.logout();
+  });
+
+  const directs: DirectAgent = new DirectAgentImpl(state.token, () => {
     actions.logout();
   });
 
   return {
-    user,
+    profile,
+    users,
+    directs,
   };
 }

@@ -3,11 +3,11 @@ import { API_ROOT } from "../../constants/api";
 type HttpRequestMethodType = "GET" | "POST" | "PUT" | "DELETE";
 
 export interface BaseAgent {
-  createFetchHttpRequest(
+  createFetchHttpRequest<T>(
     method: HttpRequestMethodType,
     url: string,
     resKey: string
-  ): Promise<any>;
+  ): Promise<T | undefined>;
   createHttpRequest<DataType>(
     method: HttpRequestMethodType,
     url: string,
@@ -16,19 +16,19 @@ export interface BaseAgent {
   ): Promise<any>;
 }
 
+// TODO : add separate methods for headers and configs of api calls
 export class BaseAgentImpl implements BaseAgent {
   constructor(private token: string | null, private onError: () => void) {}
 
-  public async createFetchHttpRequest(
+  public async createFetchHttpRequest<T>(
     method: HttpRequestMethodType,
     url: string,
     resKey: string
-  ): Promise<any> {
+  ): Promise<T | undefined> {
     if (!this.token) return;
 
-    // FIXME : make this variables type safe
-    const headers: any = {};
-    const opts: any = { method, headers };
+    const headers: HeadersInit = {};
+    const opts: RequestInit = { method, headers };
 
     headers["Authorization"] = `${this.token}`;
 
@@ -54,9 +54,8 @@ export class BaseAgentImpl implements BaseAgent {
   ): Promise<any> {
     if (!this.token) return;
 
-    // FIXME : make this variables type safe
-    const headers: any = {};
-    const opts: any = { method, headers };
+    const headers: HeadersInit = {};
+    const opts: RequestInit = { method, headers };
 
     if (data !== undefined) {
       opts.body = JSON.stringify(data);
@@ -66,6 +65,7 @@ export class BaseAgentImpl implements BaseAgent {
     headers["Authorization"] = `${this.token}`;
 
     const res = await fetch(API_ROOT + url, opts);
+
     if (!res.ok && res.status == 401) {
       this.onError();
       return;

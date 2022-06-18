@@ -7,10 +7,11 @@ import { Router, Route, Routes, useNavigate } from "solid-app-router";
 import Auth from "./screens/Auth";
 import Channel from "./components/Channel";
 import Welcome from "./components/Welcome";
+import DirectChat from "./components/DirectChat";
 
 const AppWithAuth = () => {
   const nav = useNavigate();
-  const [{ token }] = useStore();
+  const [{ token }, { addToDirects }] = useStore();
 
   if (!token?.length) {
     nav("/auth");
@@ -19,8 +20,18 @@ const AppWithAuth = () => {
   return (
     <Routes>
       <Route path="/" element={<App />}>
-        <Route path="channel" element={<Channel />} />
         <Route path="channel/:name" element={<Channel />} />
+        <Route
+          path="user/:username"
+          data={(route) => {
+            console.log(route);
+            //addToDirects();
+            // TODO : fetch chats
+            // TODO : return chats
+            return [];
+          }}
+          element={<DirectChat />}
+        />
         <Route path="*" element={<Welcome />} />
       </Route>
       <Route path="auth" element={<Auth />} />
