@@ -13,9 +13,9 @@
   background: none rgba(255, 255, 255, 0.2);
   box-shadow: none;
   margin-left: 10px;
-  font-size: 13px;
-  padding: 8px 12px;
-  min-width: 70px;
+  font-size: 1.3rem;
+  padding: 0.8rem 1.2rem;
+  min-width: 7rem;
   border: none;
   color: white !important;
 }
