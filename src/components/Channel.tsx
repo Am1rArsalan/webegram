@@ -1,6 +1,6 @@
 import { useParams } from "solid-app-router";
 import { Component } from "solid-js";
-import styles from "./styles/Channel.module.css";
+import styles from "./styles/Chat.module.css";
 import { classNames } from "./UI/utils/classNames";
 
 const Channel: Component = () => {
