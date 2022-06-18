@@ -1,7 +1,7 @@
 import { Outlet } from "solid-app-router";
 import { Component } from "solid-js";
-import styles from "./App.module.css";
-import Sidebar from "./components/Sidebar";
+import styles from "./styles/App.module.css";
+import Sidebar from "../components/Sidebar";
 
 const App: Component = () => {
   return (

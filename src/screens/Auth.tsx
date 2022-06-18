@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 import { Button } from "../components/UI/button";
-import styles from "../App.module.css";
+import styles from "./styles/App.module.css";
 
 const Auth: Component = () => {
   return (

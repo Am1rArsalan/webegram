@@ -1,11 +1,12 @@
-/* @refresh reload */
 import { render } from "solid-js/web";
 
 import "./index.css";
-import App from "./App";
+import App from "./screens/App";
 import { Provider, useStore } from "./store/";
 import { Router, Route, Routes, useNavigate } from "solid-app-router";
 import Auth from "./screens/Auth";
+import Channel from "./components/Channel";
+import Welcome from "./components/Welcome";
 
 const AppWithAuth = () => {
   const nav = useNavigate();
@@ -17,8 +18,12 @@ const AppWithAuth = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/auth" element={<Auth />} />
+      <Route path="/" element={<App />}>
+        <Route path="channel" element={<Channel />} />
+        <Route path="channel/:name" element={<Channel />} />
+        <Route path="*" element={<Welcome />} />
+      </Route>
+      <Route path="auth" element={<Auth />} />
     </Routes>
   );
 };
