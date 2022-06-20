@@ -1,5 +1,6 @@
 import { useParams } from "solid-app-router";
 import { Component } from "solid-js";
+import { MessageWithAvatar, MessageWithoutAvatar } from "./Chat";
 import styles from "./styles/Chat.module.css";
 import { classNames } from "./UI/utils/classNames";
 
@@ -7,9 +8,9 @@ const Channel: Component = () => {
   const params = useParams();
 
   return (
-    <div class={styles.Channel}>
-      <div class={styles.ChannelMain}>
-        <div class={styles.ChannelInfo}>
+    <div class={styles.ChatContainer}>
+      <div class={styles.ChatMain}>
+        <div class={styles.ChatInfo}>
           <div class={styles.Topic}>
             Topic: <input class={styles.TopicInput} value="Awesome stuff" />
           </div>
@@ -23,22 +24,10 @@ const Channel: Component = () => {
               <div class={styles.DayText}>12/6/2018</div>
               <div class={styles.DayLine} />
             </div>
-            <div class={classNames(styles.Message, styles.withAvatar)}>
-              <div class={styles.Avatar} />
-              <div class={styles.Author}>
-                <div>
-                  <span class={styles.UserName}>Ryan Florence </span>
-                  <span class={styles.TimeStamp}>3:37 PM</span>
-                </div>
-                <div class={styles.MessageContent}>Alright, lets do this.</div>
-              </div>
-            </div>
           </div>
-          <div>
-            <div class={classNames(styles.Message, styles.noAvatar)}>
-              <div class={styles.MessageContent}>works now?</div>
-            </div>
-          </div>
+          <MessageWithAvatar> with avatar </MessageWithAvatar>
+          <MessageWithoutAvatar> works now 1</MessageWithoutAvatar>
+          <MessageWithoutAvatar> works now 2</MessageWithoutAvatar>
         </div>
         <div class={styles.ChatInputBox}>
           <input class={styles.ChatInput} placeholder="Message #general" />

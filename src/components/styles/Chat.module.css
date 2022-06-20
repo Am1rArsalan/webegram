@@ -34,47 +34,6 @@
   font-size: 80%;
 }
 
-.Message {
-  margin: 5px 0;
-  display: flex;
-}
-
-.Message.withAvatar {
-  display: flex;
-  margin-top: 1rem;
-}
-
-.Avatar {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 3px;
-  background-size: cover;
-  background-position: center center;
-  background-color: #fefefe;
-  background-image: url(https://placekitten.com/64/64);
-}
-
-.Author {
-  margin-left: 1rem;
-}
-
-.UserName {
-  font-weight: bold;
-  font-size: 90%;
-}
-
-.TimeStamp {
-  color: #999;
-  font-size: 80%;
-}
-
-.MessageContent {
-}
-
-.Message.noAvatar {
-  margin-left: 3.8rem;
-}
-
 .ChatInputBox {
   padding: 0rem 2rem 2rem 2rem;
 }
@@ -135,18 +94,18 @@
   margin-top: 5.5rem;
 }
 
-.Channel {
+.ChatContainer {
   flex: 1;
   display: flex;
 }
 
-.ChannelMain {
+.ChatMain {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.ChannelInfo {
+.ChatInfo {
   display: flex;
   align-items: center;
   justify-content: space-between;
