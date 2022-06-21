@@ -13,7 +13,6 @@
 
 .text-button {
   font: inherit;
-  background: none;
   border: none;
   padding: 0;
   margin: 0;
@@ -30,7 +29,7 @@
   flex-direction: column;
 }
 
-.ChannelNav a {
+.ChannelNav a.ChanelLink {
   font-size: 90%;
   padding: 0.8rem 2rem;
   display: block;
@@ -38,6 +37,23 @@
   color: #fff;
 }
 
-.ChannelNav a.active {
+.ChannelNav a.ActiveLink {
   background: hsl(30, 50%, 50%);
+}
+
+.List {
+  width: 90%;
+  margin: auto;
+}
+
+.List ul {
+  padding: 0;
+  margin: 0;
+}
+
+.List input {
+  height: 2rem;
+  padding: 3px 0px;
+  font-size: 1.3rem;
+  width: 100%;
 }
