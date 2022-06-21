@@ -5,4 +5,5 @@ export type ProfileType = {
   image: string;
   email: string;
   createdAt: string;
+  directs: string[];
 };
