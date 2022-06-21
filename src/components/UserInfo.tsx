@@ -1,24 +1,17 @@
-import { useStore } from "../store";
+import { Component, ParentProps } from "solid-js";
 import styles from "./styles/UserInfo.module.css";
-import { classNames } from "./UI/utils/classNames";
 
-const UserInfo = () => {
-  const [{ profile }, { logout }] = useStore();
+const UserInfo: Component<
+  ParentProps<{ displayName: string; image: string }>
+> = ({ displayName, image, children }) => {
   return (
-    <div class={styles.User}>
-      <img class={styles.UserImage} alt="whatever" src={profile()?.image} />
+    <li class={styles.User}>
+      <img class={styles.UserImage} alt="user-avatar" src={image} />
       <div>
-        <div>{profile()?.displayName}</div>
-        <div>
-          <button
-            class={classNames(styles.text, styles.button)}
-            onClick={() => logout()}
-          >
-            log out
-          </button>
-        </div>
+        <div>{displayName}</div>
+        <div>{children}</div>
       </div>
-    </div>
+    </li>
   );
 };
 
