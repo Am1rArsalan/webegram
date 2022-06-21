@@ -8,11 +8,11 @@ import Auth from "./screens/Auth";
 import Channel from "./components/Channel";
 import Welcome from "./components/Welcome";
 import DirectChat from "./components/DirectChat";
+//import { createComputed } from "solid-js";
 
 const AppWithAuth = () => {
   const nav = useNavigate();
-  const [{ token }, { addToDirects }] = useStore();
-
+  const [{ token }] = useStore();
   if (!token?.length) {
     nav("/auth");
   }
@@ -22,12 +22,9 @@ const AppWithAuth = () => {
       <Route path="/" element={<App />}>
         <Route path="channel/:name" element={<Channel />} />
         <Route
-          path="user/:username"
+          path="user/:email"
           data={(route) => {
-            console.log(route);
-            //addToDirects();
-            // TODO : fetch chats
-            // TODO : return chats
+            // TODO : fetch chats => route.query.email
             return [];
           }}
           element={<DirectChat />}

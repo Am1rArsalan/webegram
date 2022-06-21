@@ -1,4 +1,4 @@
-import { Component, createContext, useContext } from "solid-js";
+import { Accessor, Component, createContext, useContext } from "solid-js";
 import { ParentProps, Resource } from "solid-js";
 import { createStore } from "solid-js/store";
 import { StoreType } from "../types/store";
@@ -9,17 +9,33 @@ import createUsers, { UsersActions } from "./createUsers";
 import { UserType } from "../types/user";
 import { DirectType } from "../types/direct";
 import createDirects, { DirectActions } from "./createDirects";
+import createSocketConnection, {
+  SocketActions,
+} from "./createSocketConnection";
 
-export type Actions = ProfileActions & UsersActions & DirectActions;
+export type Actions = ProfileActions &
+  UsersActions &
+  DirectActions &
+  SocketActions;
 
 export type StoreContextType = [StoreType, Actions];
 
-const StoreContext = createContext<StoreContextType>();
+const StoreContext = createContext<StoreContextType>([
+  {
+    token: "",
+    profile: null,
+    users: [],
+    directs: [],
+    socketConnection: false,
+  },
+  Object({}),
+]);
 
 export const Provider: Component<ParentProps> = (props) => {
   let profile: Resource<ProfileType | undefined>;
   let users: Resource<UserType[] | undefined>;
-  let directs: Resource<DirectType[] | undefined>;
+  let directs: Resource<DirectType | undefined>;
+  let socketConnection: Accessor<boolean>;
 
   const queryParams = new URLSearchParams(location.search);
   if (!localStorage.getItem("token") && queryParams.get("token")) {
@@ -28,25 +44,34 @@ export const Provider: Component<ParentProps> = (props) => {
     history.pushState({ path: newUrl }, "", newUrl);
   }
 
-  const [state] = createStore<StoreType>({
+  const [state, setState] = createStore<StoreType>({
     token: localStorage.getItem("token"),
     get profile() {
-      return profile;
-    },
-    get users() {
-      return users;
+      const profileData = profile();
+      return profileData ? profileData : null;
     },
     get directs() {
-      return directs;
+      const directsData = directs();
+      return directsData ? directsData.directs : [];
+    },
+    get users() {
+      const usersData = users();
+      return users;
+      //return usersData ? usersData : [];
+    },
+
+    get socketConnection() {
+      return socketConnection();
     },
   });
 
   const actions: Actions = Object({});
   const store: StoreContextType = [state, actions];
   const agent = createAgent(store);
-  profile = createProfile(actions, agent.profile);
+  profile = createProfile(actions, agent.profile, setState);
   users = createUsers(actions, agent.users);
-  users = createDirects(actions, agent.directs);
+  directs = createDirects(state, actions, agent.directs);
+  socketConnection = createSocketConnection(actions);
 
   return (
     <StoreContext.Provider value={store}>
@@ -57,5 +82,5 @@ export const Provider: Component<ParentProps> = (props) => {
 
 export function useStore() {
   const store = useContext(StoreContext);
-  return store as StoreContextType;
+  return store;
 }
