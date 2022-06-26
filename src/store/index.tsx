@@ -71,7 +71,7 @@ export const Provider: Component<ParentProps> = (props) => {
   profile = createProfile(actions, agent.profile, setState);
   users = createUsers(actions, agent.users);
   directs = createDirects(state, actions, agent.directs);
-  socketConnection = createSocketConnection(actions);
+  socketConnection = createSocketConnection(state, actions);
 
   return (
     <StoreContext.Provider value={store}>

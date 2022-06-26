@@ -1,8 +1,38 @@
 import { useParams, useRouteData } from "solid-app-router";
-import { Component } from "solid-js";
+import { Component, createSignal } from "solid-js";
+import { useStore } from "../store";
 import { MessageWithAvatar, MessageWithoutAvatar } from "./Chat";
 import styles from "./styles/Chat.module.css";
 import { classNames } from "./UI/utils/classNames";
+
+const ChatInputForm: Component<{ to: string }> = ({ to }) => {
+  const [message, setMessage] = createSignal("");
+  const [_, { sendMessage }] = useStore();
+
+  const handleSend = (
+    ev: Event & { submitter: HTMLElement } & {
+      currentTarget: HTMLFormElement;
+      target: Element;
+    }
+  ) => {
+    ev.preventDefault();
+    if (message().length == 0) return;
+
+    sendMessage(message(), to);
+    setMessage("");
+  };
+
+  return (
+    <form class={styles.ChatInputBox} onSubmit={handleSend}>
+      <input
+        value={message()}
+        onChange={(ev) => setMessage(ev.currentTarget.value)}
+        class={styles.ChatInput}
+        placeholder="Message #general"
+      />
+    </form>
+  );
+};
 
 const DirectChat: Component = () => {
   const params = useParams();
@@ -30,9 +60,7 @@ const DirectChat: Component = () => {
           <MessageWithAvatar> with avatar </MessageWithAvatar>
           <MessageWithoutAvatar>chat in direct</MessageWithoutAvatar>
         </div>
-        <div class={styles.ChatInputBox}>
-          <input class={styles.ChatInput} placeholder="Message #general" />
-        </div>
+        <ChatInputForm to={`${params.email}@gmail.com`} />
       </div>
       <div class={styles.Members}>
         <div>
