@@ -9,7 +9,6 @@ import {
 import { useStore } from "../store";
 import styles from "./styles/App.module.css";
 import Sidebar from "../components/Sidebar";
-import io from "socket.io-client";
 
 const App: Component = () => {
   const [store, { loadProfile, resetSocketConnection }] = useStore();
