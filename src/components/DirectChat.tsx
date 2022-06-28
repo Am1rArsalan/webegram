@@ -1,43 +1,20 @@
-import { useParams, useRouteData } from "solid-app-router";
-import { Component, createSignal } from "solid-js";
+import { useParams } from "solid-app-router";
+import { Component, createComputed, For } from "solid-js";
 import { useStore } from "../store";
-import { MessageWithAvatar, MessageWithoutAvatar } from "./Chat";
+import { MessageWithAvatar } from "./Chat";
+import ChatInputForm from "./ChatInputForm";
 import styles from "./styles/Chat.module.css";
 import { classNames } from "./UI/utils/classNames";
 
-const ChatInputForm: Component<{ to: string }> = ({ to }) => {
-  const [message, setMessage] = createSignal("");
-  const [_, { sendMessage }] = useStore();
-
-  const handleSend = (
-    ev: Event & { submitter: HTMLElement } & {
-      currentTarget: HTMLFormElement;
-      target: Element;
-    }
-  ) => {
-    ev.preventDefault();
-    if (message().length == 0) return;
-
-    sendMessage(message(), to);
-    setMessage("");
-  };
-
-  return (
-    <form class={styles.ChatInputBox} onSubmit={handleSend}>
-      <input
-        value={message()}
-        onChange={(ev) => setMessage(ev.currentTarget.value)}
-        class={styles.ChatInput}
-        placeholder="Message #general"
-      />
-    </form>
-  );
-};
-
 const DirectChat: Component = () => {
   const params = useParams();
-  const data = useRouteData();
-  console.log("chats...", data);
+  const [{ direct, profile }, { fetchDirect }] = useStore();
+
+  createComputed(() => {
+    fetchDirect(params.email);
+  });
+
+  console.log("profile is", profile);
 
   return (
     <div class={styles.ChatContainer}>
@@ -57,8 +34,25 @@ const DirectChat: Component = () => {
               <div class={styles.DayLine} />
             </div>
           </div>
-          <MessageWithAvatar> with avatar </MessageWithAvatar>
-          <MessageWithoutAvatar>chat in direct</MessageWithoutAvatar>
+          <For each={direct()}>
+            {(message) => (
+              <MessageWithAvatar
+                image={
+                  message.from == profile?._id
+                    ? profile?.image
+                    : message.to.image
+                }
+                username={
+                  message.from == profile?._id
+                    ? profile?.displayName
+                    : message.to.displayName
+                }
+              >
+                {message.content}
+              </MessageWithAvatar>
+            )}
+          </For>
+          {/* <MessageWithoutAvatar> chat in direct </MessageWithoutAvatar> */}
         </div>
         <ChatInputForm to={`${params.email}@gmail.com`} />
       </div>

@@ -22,7 +22,7 @@
   background-size: cover;
   background-position: center center;
   background-color: #fefefe;
-  background-image: url(https://placekitten.com/64/64);
+  position: relative;
 }
 
 .Author {

@@ -2,8 +2,7 @@ import { DirectType } from "../../../types/direct";
 import { BaseAgentImpl } from "../BaseAgent";
 
 export interface DirectAgent {
-  fetchDirects(): Promise<DirectType | undefined>;
-  addToDirects(email: string): Promise<void | undefined>;
+  fetchDirect(from?: string, to?: string): Promise<DirectType[] | undefined>;
 }
 
 export class DirectAgentImpl extends BaseAgentImpl implements DirectAgent {
@@ -11,18 +10,10 @@ export class DirectAgentImpl extends BaseAgentImpl implements DirectAgent {
     super(token, onError);
   }
 
-  addToDirects(email: string) {
-    return this.createFetchHttpRequest<void>(
-      "PUT",
-      `/user/invite?email=${email}`,
-      "data"
-    );
-  }
-
-  fetchDirects() {
-    return this.createFetchHttpRequest<DirectType>(
+  fetchDirect(to?: string) {
+    return this.createFetchHttpRequest<DirectType[]>(
       "GET",
-      "/user/directs",
+      `/chat/direct/${to}`,
       "data"
     );
   }

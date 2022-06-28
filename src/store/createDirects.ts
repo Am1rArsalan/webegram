@@ -1,32 +1,34 @@
 import { createResource, createSignal } from "solid-js";
 import type { Resource } from "solid-js";
-import { DirectType } from "../types/direct";
+import { DirectsType } from "../types/directs";
 import { Actions } from ".";
-import { DirectAgent } from "./agent/direct-agent/DirectAgent";
+import { DirectsAgent } from "./agent/directs-agent/DirectsAgent";
 import { StoreType } from "../types/store";
 
-export interface DirectActions {
-  addToDirects(email: string): void;
+export interface DirectsActions {
+  addToDirects(id: string): void;
   loadDirects(value: string | null): void;
 }
 
 export default function createDirects(
   state: StoreType,
   actions: Actions,
-  agent: DirectAgent
-): Resource<DirectType | undefined> {
+  agent: DirectsAgent
+): Resource<DirectsType | undefined> {
   const [directsSource, setDirectsSource] = createSignal();
   const [directs] = createResource(directsSource, () => agent.fetchDirects());
 
-  Object.assign<Actions, DirectActions>(actions, {
+  Object.assign<Actions, DirectsActions>(actions, {
     loadDirects(value: string | null) {
       setDirectsSource(value);
     },
-    async addToDirects(email: string) {
-      if (state.directs?.findIndex((direct) => direct.email == email) == -1) {
-        console.log("email is ", email, directsSource());
-        setDirectsSource(email);
-        await agent.addToDirects(email);
+
+    async addToDirects(id: string) {
+      if (
+        state.directs?.directs.findIndex((direct) => direct._id == id) == -1
+      ) {
+        setDirectsSource(id);
+        await agent.addToDirects(id);
       }
     },
   });

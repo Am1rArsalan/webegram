@@ -1,6 +1,12 @@
-import { UserType } from "./user";
-
 export type DirectType = {
-  id: string;
-  directs: UserType[];
+  _id: string;
+  from: string;
+  to: {
+    _id: string;
+    displayName: string;
+    email: string;
+  };
+  content: string;
+  created_at: string;
+  updated_at: string;
 };

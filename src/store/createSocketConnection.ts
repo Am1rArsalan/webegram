@@ -32,7 +32,11 @@ export default function createSocketConnection(
       socket.off("disconnect");
     },
     sendMessage(content: string, to: string) {
-      socket.emit("message", { from: state?.profile?.email, to, content });
+      socket.emit("message", {
+        from: state?.profile?._id,
+        to,
+        content,
+      });
     },
   });
 

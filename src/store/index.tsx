@@ -7,14 +7,17 @@ import createAgent from "./createAgent";
 import createProfile, { ProfileActions } from "./createProfile";
 import createUsers, { UsersActions } from "./createUsers";
 import { UserType } from "../types/user";
-import { DirectType } from "../types/direct";
-import createDirects, { DirectActions } from "./createDirects";
+import { DirectsType } from "../types/directs";
+import createDirects, { DirectsActions } from "./createDirects";
 import createSocketConnection, {
   SocketActions,
 } from "./createSocketConnection";
+import createDirect, { DirectActions } from "./createDirect";
+import { DirectType } from "../types/direct";
 
 export type Actions = ProfileActions &
   UsersActions &
+  DirectsActions &
   DirectActions &
   SocketActions;
 
@@ -23,9 +26,10 @@ export type StoreContextType = [StoreType, Actions];
 const StoreContext = createContext<StoreContextType>([
   {
     token: "",
-    profile: null,
+    profile: undefined,
     users: [],
-    directs: [],
+    directs: undefined,
+    direct: [],
     socketConnection: false,
   },
   Object({}),
@@ -34,7 +38,8 @@ const StoreContext = createContext<StoreContextType>([
 export const Provider: Component<ParentProps> = (props) => {
   let profile: Resource<ProfileType | undefined>;
   let users: Resource<UserType[] | undefined>;
-  let directs: Resource<DirectType | undefined>;
+  let directs: Resource<DirectsType | undefined>;
+  let direct: Resource<DirectType[] | undefined>;
   let socketConnection: Accessor<boolean>;
 
   const queryParams = new URLSearchParams(location.search);
@@ -47,19 +52,22 @@ export const Provider: Component<ParentProps> = (props) => {
   const [state, setState] = createStore<StoreType>({
     token: localStorage.getItem("token"),
     get profile() {
-      const profileData = profile();
-      return profileData ? profileData : null;
+      return profile();
     },
     get directs() {
       const directsData = directs();
-      return directsData ? directsData.directs : [];
+      return directsData;
+    },
+    get direct() {
+      const directData = direct();
+      console.log(directData);
+      return direct;
     },
     get users() {
       const usersData = users();
       return users;
       //return usersData ? usersData : [];
     },
-
     get socketConnection() {
       return socketConnection();
     },
@@ -71,6 +79,8 @@ export const Provider: Component<ParentProps> = (props) => {
   profile = createProfile(actions, agent.profile, setState);
   users = createUsers(actions, agent.users);
   directs = createDirects(state, actions, agent.directs);
+  direct = createDirect(state, actions, agent.direct);
+
   socketConnection = createSocketConnection(state, actions);
 
   return (

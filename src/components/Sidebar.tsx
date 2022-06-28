@@ -13,12 +13,12 @@ const Sidebar: Component = () => {
   const [directsListLoaded, setDirectListLoaded] = createSignal(false);
 
   createComputed(() => {
-    !store.directs.length &&
+    !store.directs?.directs.length &&
       loadDirects(store?.profile?.email ? store?.profile?.email : null);
-    store.directs.length && setDirectListLoaded(true);
+    store.directs?.directs.length && setDirectListLoaded(true);
   });
 
-  //TODO : fix load problem in directs list
+  // TODO : fix load problem in directs list
   return (
     <div class={styles.Nav}>
       <UserInfo

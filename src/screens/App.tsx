@@ -14,14 +14,10 @@ const App: Component = () => {
   const [store, { loadProfile, resetSocketConnection }] = useStore();
   const [sidebarLoaded, setSidebarLoaded] = createSignal(false);
 
-  const appLoaded = () => sidebarLoaded();
-
   createComputed(() => {
     loadProfile(store.token);
     store.profile && setSidebarLoaded(true);
   });
-
-  createComputed(() => {});
 
   onCleanup(() => {
     resetSocketConnection();
@@ -29,10 +25,9 @@ const App: Component = () => {
 
   return (
     <div class={styles.App}>
-      <Show when={appLoaded()}>
+      <Show when={sidebarLoaded()}>
         <Sidebar />
       </Show>
-
       <Show
         when={store.socketConnection}
         fallback={
@@ -41,7 +36,6 @@ const App: Component = () => {
       >
         <h2 style={{ position: "fixed", bottom: "10px" }}> connected </h2>
       </Show>
-
       <Outlet />
     </div>
   );
