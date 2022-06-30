@@ -1,10 +1,12 @@
+import { useParams } from "solid-app-router";
 import { Component, createSignal } from "solid-js";
 import { useStore } from "../store";
 import styles from "./styles/ChatInputForm.module.css";
 
-const ChatInputForm: Component<{ to: string }> = ({ to }) => {
+const ChatInputForm: Component = () => {
   const [message, setMessage] = createSignal("");
   const [_, { sendMessage }] = useStore();
+  const params = useParams();
 
   const handleSend = (
     ev: Event & { submitter: HTMLElement } & {
@@ -15,7 +17,7 @@ const ChatInputForm: Component<{ to: string }> = ({ to }) => {
     ev.preventDefault();
     if (message().length == 0) return;
 
-    sendMessage(message(), to);
+    sendMessage(message(), params.email);
     setMessage("");
   };
 

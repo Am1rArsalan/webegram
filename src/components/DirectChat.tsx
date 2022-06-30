@@ -1,20 +1,23 @@
 import { useParams } from "solid-app-router";
-import { Component, createComputed, For } from "solid-js";
+import { Component, createComputed, onMount } from "solid-js";
 import { useStore } from "../store";
-import { MessageWithAvatar } from "./Chat";
 import ChatInputForm from "./ChatInputForm";
 import styles from "./styles/Chat.module.css";
 import { classNames } from "./UI/utils/classNames";
+import MessagesList from "./MessagesList";
 
 const DirectChat: Component = () => {
   const params = useParams();
-  const [{ direct, profile }, { fetchDirect }] = useStore();
+  const [_, actions] = useStore();
 
   createComputed(() => {
-    fetchDirect(params.email);
+    actions.fetchDirect(params.email);
   });
 
-  console.log("profile is", profile);
+  onMount(() => {
+    const chatContainer = document.querySelector("#ChatMain") as HTMLDivElement;
+    chatContainer.scrollTop = chatContainer?.scrollHeight;
+  });
 
   return (
     <div class={styles.ChatContainer}>
@@ -25,36 +28,12 @@ const DirectChat: Component = () => {
           </div>*/}
           <div class={styles.ChannelName}>#{`${params.email}@gmail.com`}</div>
         </div>
-        <div class={styles.Messages}>
+        <div class={styles.Messages} id="ChatMain">
           <div class={styles.EndOfMessages}>{"That's every message!"}</div>
-          <div>
-            <div class={styles.Day}>
-              <div class={styles.DayLine} />
-              <div class={styles.DayText}>12/6/2018</div>
-              <div class={styles.DayLine} />
-            </div>
-          </div>
-          <For each={direct()}>
-            {(message) => (
-              <MessageWithAvatar
-                image={
-                  message.from == profile?._id
-                    ? profile?.image
-                    : message.to.image
-                }
-                username={
-                  message.from == profile?._id
-                    ? profile?.displayName
-                    : message.to.displayName
-                }
-              >
-                {message.content}
-              </MessageWithAvatar>
-            )}
-          </For>
+          <MessagesList />
           {/* <MessageWithoutAvatar> chat in direct </MessageWithoutAvatar> */}
         </div>
-        <ChatInputForm to={`${params.email}@gmail.com`} />
+        <ChatInputForm />
       </div>
       <div class={styles.Members}>
         <div>
