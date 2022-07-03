@@ -4,10 +4,8 @@ import { useStore } from "../store";
 
 const Search = () => {
   const [value, setValue] = createSignal("");
-  const [
-    { users, profile },
-    { updateSearchQuery, addToDirects, resetSearchedUsers },
-  ] = useStore();
+  const [store, { updateSearchQuery, addToDirects, resetSearchedUsers }] =
+    useStore();
   const nav = useNavigate();
 
   return (
@@ -22,7 +20,9 @@ const Search = () => {
       {value()}
       <br />
       <For
-        each={users().filter((item) => !profile?.directs?.includes(item._id))}
+        each={store.users.filter(
+          (item) => !store.profile?.directs?.includes(item._id)
+        )}
       >
         {(user) => {
           return (

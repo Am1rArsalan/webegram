@@ -1,23 +1,11 @@
 import { Outlet } from "solid-app-router";
-import {
-  Component,
-  createComputed,
-  createSignal,
-  onCleanup,
-  Show,
-} from "solid-js";
+import { Component, lazy, onCleanup, Show } from "solid-js";
 import { useStore } from "../store";
 import styles from "./styles/App.module.css";
-import Sidebar from "../components/Sidebar";
+const Sidebar = lazy(() => import("../components/Sidebar"));
 
 const App: Component = () => {
-  const [store, { loadProfile, resetSocketConnection }] = useStore();
-  const [sidebarLoaded, setSidebarLoaded] = createSignal(false);
-
-  createComputed(() => {
-    loadProfile(store.token);
-    store.profile && setSidebarLoaded(true);
-  });
+  const [store, { resetSocketConnection }] = useStore();
 
   onCleanup(() => {
     resetSocketConnection();
@@ -25,9 +13,7 @@ const App: Component = () => {
 
   return (
     <div class={styles.App}>
-      <Show when={sidebarLoaded()}>
-        <Sidebar />
-      </Show>
+      <Sidebar />
       <Show
         when={store.socketConnection}
         fallback={

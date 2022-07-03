@@ -5,11 +5,11 @@ import styles from "./styles/UsersList.module.css";
 import UserInfo from "./UserInfo";
 
 const DirectsList: Component = () => {
-  const [{ directs }] = useStore();
+  const [store] = useStore();
 
   return (
     <ul>
-      <For each={directs?.directs}>
+      <For each={store.directs?.directs}>
         {(direct) => {
           return (
             <NavLink

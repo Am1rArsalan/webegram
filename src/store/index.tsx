@@ -60,28 +60,27 @@ export const Provider: Component<ParentProps> = (props) => {
     },
     get direct() {
       const directData = direct();
-      console.log(directData);
-      return direct;
+      return directData ? directData : [];
     },
     get users() {
       const usersData = users();
-      return users;
-      //return usersData ? usersData : [];
+      return usersData ? usersData : [];
     },
     get socketConnection() {
       return socketConnection();
     },
   });
 
+  // FIXMe  : as ...
   const actions: Actions = Object({});
   const store: StoreContextType = [state, actions];
   const agent = createAgent(store);
   profile = createProfile(actions, agent.profile, setState);
-  users = createUsers(actions, agent.users);
+  users = createUsers(actions, agent.users, setState);
   directs = createDirects(state, actions, agent.directs);
-  direct = createDirect(state, actions, agent.direct);
+  direct = createDirect(state, actions, agent.direct, setState);
 
-  socketConnection = createSocketConnection(state, actions);
+  socketConnection = createSocketConnection(state as StoreType, actions);
 
   return (
     <StoreContext.Provider value={store}>

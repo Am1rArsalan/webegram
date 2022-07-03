@@ -8,22 +8,20 @@ import UserInfo from "./UserInfo";
 const DirectsList = lazy(() => import("./DirectsList"));
 
 const Sidebar: Component = () => {
-  const [{ profile }, { logout, loadDirects }] = useStore();
-  const [store] = useStore();
+  const [store, { logout, loadDirects }] = useStore();
   const [directsListLoaded, setDirectListLoaded] = createSignal(false);
 
   createComputed(() => {
     !store.directs?.directs.length &&
-      loadDirects(store?.profile?.email ? store?.profile?.email : null);
+      loadDirects(store.profile?.email ? store.profile?.email : null);
     store.directs?.directs.length && setDirectListLoaded(true);
   });
 
-  // TODO : fix load problem in directs list
   return (
     <div class={styles.Nav}>
       <UserInfo
-        displayName={profile?.displayName || ""}
-        image={profile?.image || ""}
+        displayName={store.profile?.displayName || ""}
+        image={store.profile?.image || ""}
       >
         <button
           class={classNames(styles.text, styles.button)}
