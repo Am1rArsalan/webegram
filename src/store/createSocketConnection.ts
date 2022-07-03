@@ -2,7 +2,6 @@ import io from "socket.io-client";
 import { createSignal } from "solid-js";
 import { Actions } from ".";
 import { StoreType } from "../types/store";
-//import { SocketAgent } from "./agent/sockets-agent/SocketAgent";
 
 export interface SocketActions {
   resetSocketConnection(): void;
@@ -13,7 +12,13 @@ export default function createSocketConnection(
   state: StoreType,
   actions: Actions
 ) {
-  const socket = io("http://127.0.0.1:8080");
+  if (!state.token) return;
+
+  const socket = io("http://127.0.0.1:8080", {
+    query: {
+      token: state.token || "",
+    },
+  });
   const [connectionStatus, setConnectionStatus] = createSignal(
     socket.connected
   );
@@ -26,17 +31,29 @@ export default function createSocketConnection(
     setConnectionStatus(false);
   });
 
+  socket.on("messageCreated", ({ createdMessage, pendingItemCreationTime }) => {
+    //console.log("message created", id);
+    actions.revalidatePendingChat(pendingItemCreationTime, createdMessage);
+  });
+
+  socket.on("messageReceived", (createdMessage) => {
+    actions.addMessage(createdMessage);
+  });
+
   Object.assign<Actions, SocketActions>(actions, {
     resetSocketConnection() {
       socket.off("connect");
       socket.off("disconnect");
     },
     sendMessage(content: string, to: string) {
+      const pendingItemCreationTime = new Date().toISOString();
       socket.emit("message", {
         from: state?.profile?._id,
         to,
         content,
+        pendingItemCreationTime,
       });
+      actions.createPendingChat(content, pendingItemCreationTime, to);
     },
   });
 
