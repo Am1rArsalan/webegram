@@ -1,41 +1,35 @@
 import { render } from "solid-js/web";
-
+import { createComputed } from "solid-js";
 import "./index.css";
 import App from "./screens/App";
 import { Provider, useStore } from "./store/";
 import { Router, Route, Routes, useNavigate } from "solid-app-router";
 import Auth from "./screens/Auth";
-import Channel from "./components/Channel";
 import Welcome from "./components/Welcome";
+import Channel from "./components/Channel";
 import DirectChat from "./components/DirectChat";
-import { createComputed, createSignal, Show } from "solid-js";
 
 const AppWithAuth = () => {
   const nav = useNavigate();
   const [store, { loadProfile }] = useStore();
 
-  if (!store.token?.length) {
+  if (!store.token) {
     nav("/auth");
   }
 
-  const [appLoaded, setAppLoaded] = createSignal(false);
-
   createComputed(() => {
     loadProfile(store.token);
-    store.profile && setAppLoaded(true);
   });
 
   return (
-    <Show when={appLoaded()}>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="channel/:name" element={<Channel />} />
-          <Route path="user/:email" element={<DirectChat />} />
-          <Route path="*" element={<Welcome />} />
-        </Route>
-        <Route path="auth" element={<Auth />} />
-      </Routes>
-    </Show>
+    <Routes>
+      <Route path="/" element={<App />}>
+        <Route path="channel/:name" element={<Channel />} />
+        <Route path="user/:email" element={<DirectChat />} />
+        <Route path="*" element={<Welcome />} />
+      </Route>
+      <Route path="auth" element={<Auth />} />
+    </Routes>
   );
 };
 
