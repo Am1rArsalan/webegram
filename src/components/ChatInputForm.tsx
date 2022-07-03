@@ -8,12 +8,7 @@ const ChatInputForm: Component = () => {
   const [_, { sendMessage }] = useStore();
   const params = useParams();
 
-  const handleSend = (
-    ev: Event & { submitter: HTMLElement } & {
-      currentTarget: HTMLFormElement;
-      target: Element;
-    }
-  ) => {
+  const handleSend = (ev: Event) => {
     ev.preventDefault();
     if (message().length == 0) return;
 
