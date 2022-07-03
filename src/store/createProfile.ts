@@ -23,7 +23,6 @@ export default function createProfile(
 
   Object.assign<Actions, ProfileActions>(actions, {
     loadProfile(value: string | null) {
-      //console.log("in load profile", value, token());
       setToken(value);
     },
     logout() {
