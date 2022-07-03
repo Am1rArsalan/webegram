@@ -1,10 +1,16 @@
-import { Component, For } from "solid-js";
+import { Component, For, onMount } from "solid-js";
 import { useStore } from "../store";
 import { MessageWithAvatar } from "./Chat";
 import styles from "./styles/Chat.module.css";
 
 const MessagesList: Component = () => {
   const [store] = useStore();
+
+  onMount(() => {
+    const chatContainer = document.querySelector("#ChatMain") as HTMLDivElement;
+    console.log("element to scroll", chatContainer);
+    chatContainer.scrollTop = chatContainer?.scrollHeight;
+  });
 
   return (
     <>

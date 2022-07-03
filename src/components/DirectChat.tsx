@@ -1,5 +1,5 @@
 import { useParams } from "solid-app-router";
-import { Component, createComputed, onMount } from "solid-js";
+import { Component, createComputed } from "solid-js";
 import { useStore } from "../store";
 import ChatInputForm from "./ChatInputForm";
 import styles from "./styles/Chat.module.css";
@@ -12,11 +12,6 @@ const DirectChat: Component = () => {
 
   createComputed(() => {
     actions.fetchDirect(params.email);
-  });
-
-  onMount(() => {
-    const chatContainer = document.querySelector("#ChatMain") as HTMLDivElement;
-    chatContainer.scrollTop = chatContainer?.scrollHeight;
   });
 
   return (
