@@ -1,6 +1,7 @@
 import io from "socket.io-client";
 import { createSignal } from "solid-js";
 import { Actions } from ".";
+import { SOCKET_URL } from "../constants/api";
 import { StoreType } from "../types/store";
 
 export interface SocketActions {
@@ -12,9 +13,9 @@ export default function createSocketConnection(
   state: StoreType,
   actions: Actions
 ) {
-  if (!state.token) return;
+  //if (!state.token) return;
 
-  const socket = io("http://127.0.0.1:8080", {
+  const socket = io(SOCKET_URL, {
     query: {
       token: state.token || "",
     },
