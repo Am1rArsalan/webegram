@@ -3,7 +3,6 @@ import { Component, createComputed } from "solid-js";
 import { useStore } from "../store";
 import ChatInputForm from "./ChatInputForm";
 import styles from "./styles/Chat.module.css";
-import { classNames } from "./UI/utils/classNames";
 import MessagesList from "./MessagesList";
 
 const DirectChat: Component = () => {
@@ -30,6 +29,7 @@ const DirectChat: Component = () => {
         </div>
         <ChatInputForm />
       </div>
+      {/*
       <div class={styles.Members}>
         <div>
           <div class={styles.Member}>
@@ -41,7 +41,7 @@ const DirectChat: Component = () => {
             cleverbot
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
