@@ -1,6 +1,14 @@
 .DirectChat {
+  all: unset;
 }
 
 .ActiveDirectChat {
   background: hsl(30, 50%, 50%);
+}
+
+.UserInfoEmail {
+  font-size: 1rem;
+  font-weight: 900;
+  overflow: hidden;
+  color: black;
 }
