@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  dayjs: ^1.11.3
   socket.io-client: ^4.5.1
   solid-app-router: ^0.3.3
   solid-js: ^1.4.2
@@ -9,6 +10,7 @@ specifiers:
   vite-plugin-solid: ^2.2.6
 
 dependencies:
+  dayjs: 1.11.3
   socket.io-client: 4.5.1
   solid-app-router: 0.3.3_solid-js@1.4.2
   solid-js: 1.4.2
@@ -431,6 +433,10 @@ packages:
       safe-buffer: 5.1.2
     dev: true
 
+  /dayjs/1.11.3:
+    resolution: {integrity: sha512-xxwlswWOlGhzgQ4TKzASQkUhqERI3egRNqgV4ScR8wlANA/A9tZ7miXa44vTTKEq5l7vWoL5G57bG3zA+Kow0A==}
+    dev: false
+
   /debug/4.3.4:
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
     engines: {node: '>=6.0'}
@@ -819,15 +825,15 @@ packages:
       '@socket.io/component-emitter': 3.1.0
       debug: 4.3.4
       engine.io-client: 6.2.2
-      socket.io-parser: 4.2.0
+      socket.io-parser: 4.2.1
     transitivePeerDependencies:
       - bufferutil
       - supports-color
       - utf-8-validate
     dev: false
 
-  /socket.io-parser/4.2.0:
-    resolution: {integrity: sha512-tLfmEwcEwnlQTxFB7jibL/q2+q8dlVQzj4JdRLJ/W/G1+Fu9VSxCx1Lo+n1HvXxKnM//dUuD0xgiA7tQf57Vng==}
+  /socket.io-parser/4.2.1:
+    resolution: {integrity: sha512-V4GrkLy+HeF1F/en3SpUaM+7XxYXpuMUWLGde1kSSh5nQMN4hLrbPIkD+otwh6q9R6NOQBN4AMaOZ2zVjui82g==}
     engines: {node: '>=10.0.0'}
     dependencies:
       '@socket.io/component-emitter': 3.1.0
