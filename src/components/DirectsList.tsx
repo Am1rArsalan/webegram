@@ -17,7 +17,9 @@ const DirectsList: Component = () => {
               class={styles.DirectChat}
               href={`/user/${direct.email.split("@")[0]}`}
             >
-              <UserInfo displayName={direct.displayName} image={direct.image} />
+              <UserInfo displayName={direct.displayName} image={direct.image}>
+                <span class={styles.UserInfoEmail}>{direct.email}</span>
+              </UserInfo>
             </NavLink>
           );
         }}
