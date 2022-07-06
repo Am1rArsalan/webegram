@@ -3,6 +3,11 @@ import { Component, createSignal } from "solid-js";
 import { useStore } from "../store";
 import styles from "./styles/ChatInputForm.module.css";
 
+export function scrollToEndOfList() {
+  const chatContainer = document.querySelector("#ChatMain") as HTMLDivElement;
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
 const ChatInputForm: Component = () => {
   const [message, setMessage] = createSignal("");
   const [_, { sendMessage }] = useStore();
@@ -14,6 +19,7 @@ const ChatInputForm: Component = () => {
 
     sendMessage(message(), params.email);
     setMessage("");
+    scrollToEndOfList();
   };
 
   return (
