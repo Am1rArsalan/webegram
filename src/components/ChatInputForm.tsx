@@ -15,9 +15,9 @@ const ChatInputForm: Component = () => {
 
   const handleSend = (ev: Event) => {
     ev.preventDefault();
-    if (message().length == 0) return;
+    if (message().length === 0) return;
+    params.email && sendMessage(message(), params.email);
 
-    sendMessage(message(), params.email);
     setMessage("");
     scrollToEndOfList();
   };
