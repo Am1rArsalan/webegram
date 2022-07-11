@@ -28,12 +28,10 @@ const Search = () => {
           return (
             <li
               onClick={() => {
-                addToDirects(user._id);
+                addToDirects(user.email, user._id);
                 setValue("");
                 resetSearchedUsers();
-                nav(`user/${user.email.split("@")[0]}`, {
-                  state: user._id,
-                });
+                nav(`user/${user.email.split("@")[0]}`);
               }}
             >
               user : {user?.email}
