@@ -27,7 +27,7 @@ export default function createProfile(
     },
     logout() {
       batch(() => {
-        setState({ token: undefined });
+        setState("token", null);
         mutate(undefined);
         window.location.replace("/auth");
         localStorage.clear();
