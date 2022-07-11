@@ -1,13 +1,24 @@
 import { createResource, createSignal } from "solid-js";
 import type { Resource } from "solid-js";
-import { DirectsType } from "../types/directs";
+import {
+  DirectApiType,
+  DirectsApiType,
+  DirectsType,
+  generateDirectItem,
+  generateDirectsMap,
+} from "../types/directs";
 import { Actions } from ".";
 import { DirectsAgent } from "./agent/directs-agent/DirectsAgent";
 import { StoreType } from "../types/store";
+import { scrollToEndOfList } from "../components/ChatInputForm";
+
+// TODO : fix any
 
 export interface DirectsActions {
-  addToDirects(id: string): void;
+  addToDirects(userEmail: string, userId: string): void;
   loadDirects(value: string | null): void;
+  addMessage(createdMessage: any): void;
+  receiveDirect(addedDirect: DirectApiType): void;
 }
 
 export default function createDirects(
@@ -16,20 +27,56 @@ export default function createDirects(
   agent: DirectsAgent
 ): Resource<DirectsType | undefined> {
   const [directsSource, setDirectsSource] = createSignal();
-  const [directs] = createResource(directsSource, () => agent.fetchDirects());
+  const [directs, { mutate }] = createResource(directsSource, async () => {
+    const directsData = await agent.fetchDirects();
+    const directsMap: DirectsType = new Map();
+    if (directsData && state.profile) {
+      generateDirectsMap(directsData, directsMap, state.profile._id);
+    }
+    return directsMap;
+  });
 
   Object.assign<Actions, DirectsActions>(actions, {
     loadDirects(value: string | null) {
       setDirectsSource(value);
     },
-
-    async addToDirects(id: string) {
-      if (
-        state.directs?.directs.findIndex((direct) => direct._id == id) == -1
-      ) {
-        setDirectsSource(id);
-        await agent.addToDirects(id);
+    addMessage(createdMessage: any) {
+      const directsMapClone = new Map(directs());
+      directsMapClone?.forEach((direct) => {
+        if (direct._id === createdMessage.room) {
+          direct.chats = [...direct.chats, createdMessage];
+        }
+      });
+      mutate(directsMapClone);
+      scrollToEndOfList();
+    },
+    async addToDirects(userEmail: string, userId: string) {
+      const directsMap = new Map(directs());
+      if (directsMap && !directsMap.has(userEmail)) {
+        const addedDirect = await agent.addToDirects(userId);
+        if (addedDirect) {
+          actions.emitNewDirect({ userId, createdDirect: addedDirect });
+          const receiver =
+            state.profile && addedDirect.from._id === state.profile._id
+              ? addedDirect.to
+              : addedDirect.from;
+          directsMap.set(
+            receiver.email,
+            generateDirectItem(addedDirect, receiver)
+          );
+          mutate(directsMap);
+        }
       }
+    },
+
+    async receiveDirect(addedDirect) {
+      const directsMap = new Map(directs());
+      const receiver =
+        state.profile && addedDirect.from._id === state.profile._id
+          ? addedDirect.to
+          : addedDirect.from;
+      directsMap.set(receiver.email, generateDirectItem(addedDirect, receiver));
+      mutate(directsMap);
     },
   });
 
