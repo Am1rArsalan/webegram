@@ -25,7 +25,7 @@ export class BaseAgentImpl implements BaseAgent {
     url: string,
     resKey: string
   ): Promise<T | undefined> {
-    if (!this.token) return;
+    //if (!this.token) return;
 
     const headers: HeadersInit = {};
     const opts: RequestInit = { method, headers };
@@ -52,7 +52,7 @@ export class BaseAgentImpl implements BaseAgent {
     data: DataType,
     resKey: string
   ): Promise<any> {
-    if (!this.token) return;
+    //if (!this.token) return;
 
     const headers: HeadersInit = {};
     const opts: RequestInit = { method, headers };
