@@ -2,24 +2,26 @@ import io from "socket.io-client";
 import { createSignal } from "solid-js";
 import { Actions } from ".";
 import { SOCKET_URL } from "../constants/api";
+import { DirectApiType } from "../types/directs";
 import { StoreType } from "../types/store";
 
 export interface SocketActions {
   resetSocketConnection(): void;
   sendMessage(content: string, to: string): void;
+  connectSocket(): void;
+  emitNewDirect(data: { createdDirect: DirectApiType; userId: string }): void;
 }
 
 export default function createSocketConnection(
   state: StoreType,
   actions: Actions
 ) {
-  //if (!state.token) return;
-
   const socket = io(SOCKET_URL, {
     query: {
       token: state.token || "",
     },
   });
+
   const [connectionStatus, setConnectionStatus] = createSignal(
     socket.connected
   );
@@ -28,17 +30,25 @@ export default function createSocketConnection(
     setConnectionStatus(true);
   });
 
+  socket.on("session", (data) => {
+    socket.userId = data.userId;
+  });
+
   socket.on("disconnect", () => {
     setConnectionStatus(false);
   });
 
-  socket.on("messageCreated", ({ createdMessage, pendingItemCreationTime }) => {
-    //console.log("message created", id);
-    actions.revalidatePendingChat(pendingItemCreationTime, createdMessage);
+  socket.on("direct:message-received", (createdMessage) => {
+    actions.addMessage(createdMessage);
   });
 
-  socket.on("messageReceived", (createdMessage) => {
-    actions.addMessage(createdMessage);
+  socket.on("direct:message-failed", (message) => {
+    console.log(message);
+  });
+
+  socket.on("direct:new", (data) => {
+    console.log("we are here baby");
+    actions.receiveDirect(data);
   });
 
   Object.assign<Actions, SocketActions>(actions, {
@@ -47,14 +57,21 @@ export default function createSocketConnection(
       socket.off("disconnect");
     },
     sendMessage(content: string, to: string) {
-      const pendingItemCreationTime = new Date().toISOString();
-      socket.emit("message", {
-        from: state?.profile?._id,
-        to,
-        content,
-        pendingItemCreationTime,
-      });
-      actions.createPendingChat(content, pendingItemCreationTime, to);
+      const direct = state.directs.get(`${to}@gmail.com`);
+      direct &&
+        content.length > 0 &&
+        socket.emit("direct:message-send", {
+          from: state?.profile?._id,
+          to,
+          content,
+          room: direct._id,
+        });
+    },
+    emitNewDirect(data: { createdDirect: DirectApiType; userId: string }) {
+      socket.emit("direct:new", data);
+    },
+    connectSocket() {
+      socket.connect();
     },
   });
 
