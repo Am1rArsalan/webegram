@@ -12,13 +12,10 @@ import createDirects, { DirectsActions } from "./createDirects";
 import createSocketConnection, {
   SocketActions,
 } from "./createSocketConnection";
-import createDirect, { DirectActions } from "./createDirect";
-import { DirectType } from "../types/direct";
 
 export type Actions = ProfileActions &
   UsersActions &
   DirectsActions &
-  DirectActions &
   SocketActions;
 
 export type StoreContextType = [StoreType, Actions];
@@ -28,8 +25,7 @@ const StoreContext = createContext<StoreContextType>([
     token: "",
     profile: undefined,
     users: [],
-    directs: undefined,
-    direct: [],
+    directs: new Map(),
     socketConnection: false,
   },
   Object({}),
@@ -39,7 +35,6 @@ export const Provider: Component<ParentProps> = (props) => {
   let profile: Resource<ProfileType | undefined>;
   let users: Resource<UserType[] | undefined>;
   let directs: Resource<DirectsType | undefined>;
-  let direct: Resource<DirectType[] | undefined>;
   let socketConnection: Accessor<boolean>;
 
   const queryParams = new URLSearchParams(location.search);
@@ -56,31 +51,28 @@ export const Provider: Component<ParentProps> = (props) => {
     },
     get directs() {
       const directsData = directs();
-      return directsData;
-    },
-    get direct() {
-      const directData = direct();
-      return directData ? directData : [];
+      return directsData ? directsData : new Map();
     },
     get users() {
       const usersData = users();
       return usersData ? usersData : [];
     },
     get socketConnection() {
-      return socketConnection();
+      return socketConnection ? socketConnection() : false;
     },
   });
 
   // FIXMe  : as ...
   const actions: Actions = Object({});
-  const store: StoreContextType = [state, actions];
+  const store: StoreContextType = [state as StoreType, actions];
   const agent = createAgent(store);
   profile = createProfile(actions, agent.profile, setState);
-  users = createUsers(actions, agent.users, setState);
-  directs = createDirects(state, actions, agent.directs);
-  direct = createDirect(state, actions, agent.direct, setState);
+  users = createUsers(state as StoreType, actions, agent.users);
+  directs = createDirects(state as StoreType, actions, agent.directs);
 
-  socketConnection = createSocketConnection(state as StoreType, actions);
+  if (state.token) {
+    socketConnection = createSocketConnection(state as StoreType, actions);
+  }
 
   return (
     <StoreContext.Provider value={store}>
