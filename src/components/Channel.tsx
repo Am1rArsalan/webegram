@@ -1,8 +1,9 @@
 import { useParams } from "solid-app-router";
 import { Component } from "solid-js";
-import { MessageWithAvatar, MessageWithoutAvatar } from "./Chat";
+import { MessageWithoutAvatar } from "./Chat";
+import ChatInputForm from "./ChatInputForm";
+import Members from "./Members";
 import styles from "./styles/Chat.module.css";
-import { classNames } from "./UI/utils/classNames";
 
 const Channel: Component = () => {
   const params = useParams();
@@ -25,26 +26,12 @@ const Channel: Component = () => {
               <div class={styles.DayLine} />
             </div>
           </div>
-          <MessageWithAvatar> with avatar </MessageWithAvatar>
           <MessageWithoutAvatar> works now 1</MessageWithoutAvatar>
           <MessageWithoutAvatar> works now 2</MessageWithoutAvatar>
         </div>
-        <div class={styles.ChatInputBox}>
-          <input class={styles.ChatInput} placeholder="Message #general" />
-        </div>
+        <ChatInputForm />
       </div>
-      <div class={styles.Members}>
-        <div>
-          <div class={styles.Member}>
-            <div class={classNames(styles.MemberStatus, styles.offline)} />
-            Ryan Florence
-          </div>
-          <div class={styles.Member}>
-            <div class={classNames(styles.MemberStatus, styles.online)} />
-            cleverbot
-          </div>
-        </div>
-      </div>
+      <Members />
     </div>
   );
 };
