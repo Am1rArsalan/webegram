@@ -1,5 +1,4 @@
 import { StoreContextType } from ".";
-import { DirectAgent, DirectAgentImpl } from "./agent/direct-agent/DirectAgent";
 import {
   DirectsAgent,
   DirectsAgentImpl,
@@ -14,7 +13,6 @@ export type Agent = {
   profile: ProfileAgent;
   users: UsersAgent;
   directs: DirectsAgent;
-  direct: DirectAgent;
 };
 
 export default function createAgent([state, actions]: StoreContextType): Agent {
@@ -30,14 +28,9 @@ export default function createAgent([state, actions]: StoreContextType): Agent {
     actions.logout();
   });
 
-  const direct: DirectAgent = new DirectAgentImpl(state.token, () => {
-    actions.logout();
-  });
-
   return {
     profile,
     users,
     directs,
-    direct,
   };
 }
