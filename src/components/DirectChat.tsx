@@ -1,17 +1,11 @@
 import { useParams } from "solid-app-router";
-import { Component, createComputed } from "solid-js";
-import { useStore } from "../store";
-import ChatInputForm from "./ChatInputForm";
+import { Component } from "solid-js";
 import styles from "./styles/Chat.module.css";
 import MessagesList from "./MessagesList";
+import ChatInputForm from "./ChatInputForm";
 
 const DirectChat: Component = () => {
   const params = useParams();
-  const [_, actions] = useStore();
-
-  createComputed(() => {
-    actions.fetchDirect(params.email);
-  });
 
   return (
     <div class={styles.ChatContainer}>
@@ -25,23 +19,12 @@ const DirectChat: Component = () => {
         <div class={styles.Messages} id="ChatMain">
           <div class={styles.EndOfMessages}>{"That's every message!"}</div>
           <MessagesList />
-          {/* <MessageWithoutAvatar> chat in direct </MessageWithoutAvatar> */}
+          {/* 
+             <MessageWithoutAvatar> chat in direct </MessageWithoutAvatar> 
+          */}
         </div>
         <ChatInputForm />
       </div>
-      {/*
-      <div class={styles.Members}>
-        <div>
-          <div class={styles.Member}>
-            <div class={classNames(styles.MemberStatus, styles.offline)} />
-            Ryan Florence
-          </div>
-          <div class={styles.Member}>
-            <div class={classNames(styles.MemberStatus, styles.online)} />
-            cleverbot
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };
