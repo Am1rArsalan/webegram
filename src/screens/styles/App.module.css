@@ -6,3 +6,8 @@
   bottom: 0;
   display: flex;
 }
+
+.socketConnection {
+  position: fixed;
+  bottom: 1rem;
+}
