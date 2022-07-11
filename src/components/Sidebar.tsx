@@ -1,21 +1,14 @@
-import { Component, createComputed, createSignal, lazy, Show } from "solid-js";
+import { Component } from "solid-js";
 import { useStore } from "../store";
 import ChannelList from "./ChannelList";
 import Search from "./Search";
 import styles from "./styles/Sidebar.module.css";
 import { classNames } from "./UI/utils/classNames";
 import UserInfo from "./UserInfo";
-const DirectsList = lazy(() => import("./DirectsList"));
+import DirectsList from "./DirectsList";
 
 const Sidebar: Component = () => {
-  const [store, { logout, loadDirects }] = useStore();
-  const [directsListLoaded, setDirectListLoaded] = createSignal(false);
-
-  createComputed(() => {
-    !store.directs?.directs.length &&
-      loadDirects(store.profile?.email ? store.profile?.email : null);
-    store.directs?.directs.length && setDirectListLoaded(true);
-  });
+  const [store, { logout }] = useStore();
 
   return (
     <div class={styles.Nav}>
@@ -36,9 +29,7 @@ const Sidebar: Component = () => {
         <div class={styles.List}>
           <h2> users </h2>
           <Search />
-          <Show when={directsListLoaded()}>
-            <DirectsList />
-          </Show>
+          <DirectsList />
         </div>
       </nav>
     </div>

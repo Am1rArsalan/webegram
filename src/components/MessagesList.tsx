@@ -1,15 +1,13 @@
-import { Component, For, onMount } from "solid-js";
+import dayjs from "dayjs";
+import { useParams } from "solid-app-router";
+import { Component, For } from "solid-js";
 import { useStore } from "../store";
 import { MessageWithAvatar } from "./Chat";
-import { scrollToEndOfList } from "./ChatInputForm";
 import styles from "./styles/Chat.module.css";
 
 const MessagesList: Component = () => {
+  const params = useParams();
   const [store] = useStore();
-
-  onMount(() => {
-    scrollToEndOfList();
-  });
 
   return (
     <>
@@ -20,13 +18,14 @@ const MessagesList: Component = () => {
           <div class={styles.DayLine} />
         </div>
       </div>
-      <For each={store.direct}>
+      <For each={store.directs.get(`${params.email}@gmail.com`)?.chats}>
         {(message) => {
           return (
             <MessageWithAvatar
               image={message.from.image}
               username={message.from.displayName}
               disabled={message._id === "Pending"}
+              createdAt={dayjs(message.created_at).format("HH:MM a")}
             >
               {message.content}
             </MessageWithAvatar>

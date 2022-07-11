@@ -9,16 +9,21 @@ const DirectsList: Component = () => {
 
   return (
     <ul>
-      <For each={store.directs?.directs}>
+      <For each={Array.from(store.directs.values())}>
         {(direct) => {
           return (
             <NavLink
               activeClass={styles.ActiveDirectChat}
               class={styles.DirectChat}
-              href={`/user/${direct.email.split("@")[0]}`}
+              href={`/user/${direct.receiver.email.split("@")[0]}`}
             >
-              <UserInfo displayName={direct.displayName} image={direct.image}>
-                <span class={styles.UserInfoEmail}>{direct.email}</span>
+              <UserInfo
+                displayName={direct.receiver.displayName}
+                image={direct.receiver.image}
+              >
+                <span class={styles.UserInfoEmail}>
+                  {direct.receiver.email}
+                </span>
               </UserInfo>
             </NavLink>
           );

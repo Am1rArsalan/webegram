@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "solid-app-router";
-import { Component, lazy, onCleanup, Show } from "solid-js";
+import { Component, createComputed, lazy, onCleanup, Show } from "solid-js";
 import { useStore } from "../store";
 import styles from "./styles/App.module.css";
 
@@ -7,11 +7,15 @@ const Sidebar = lazy(() => import("../components/Sidebar"));
 
 const App: Component = () => {
   const nav = useNavigate();
-  const [store, { resetSocketConnection }] = useStore();
+  const [store, { resetSocketConnection, loadDirects }] = useStore();
 
   if (!store.token) {
     nav("/auth");
   }
+
+  createComputed(() => {
+    loadDirects(store.profile?.email ? store.profile?.email : null);
+  });
 
   onCleanup(() => {
     store.socketConnection && resetSocketConnection();
