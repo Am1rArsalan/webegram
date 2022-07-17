@@ -5,13 +5,13 @@ import { classNames } from "./UI/utils/classNames";
 type MessageWithAvatarProps = {
   username?: string;
   image?: string;
-  disabled: boolean;
+  disabled?: boolean;
   createdAt: string;
 };
 
 export const MessageWithAvatar: Component<
   ParentProps<MessageWithAvatarProps>
-> = ({ children, username, image, createdAt, disabled }) => {
+> = ({ children, username, image, createdAt, disabled = false }) => {
   return (
     <div class={classNames(styles.Message, styles.withAvatar)}>
       <img class={styles.Avatar} src={image || "https://i.pravatar.cc/300"} />
