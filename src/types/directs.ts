@@ -1,7 +1,8 @@
+import { MessageType } from "./message";
 import { UserType } from "./user";
 
 export type DirectApiType = {
-  chats: any[];
+  chats: MessageType[];
   _id: string;
   from: UserType;
   to: UserType;
@@ -12,7 +13,7 @@ export type DirectApiType = {
 export type DirectsApiType = DirectApiType[];
 
 export type DirectType = {
-  chats: any[];
+  chats: MessageType[];
   _id: string;
   receiver: UserType;
   created_at: string;
