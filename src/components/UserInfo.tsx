@@ -6,7 +6,12 @@ const UserInfo: Component<
 > = ({ displayName, image, children }) => {
   return (
     <li class={styles.User}>
-      <img class={styles.UserImage} alt="user-avatar" src={image} />
+      <img
+        referrerpolicy="no-referrer"
+        class={styles.UserImage}
+        alt="user-avatar"
+        src={image}
+      />
       <div>
         <div>{displayName}</div>
         <div>{children}</div>
