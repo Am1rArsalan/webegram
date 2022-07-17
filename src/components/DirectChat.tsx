@@ -19,9 +19,6 @@ const DirectChat: Component = () => {
         <div class={styles.Messages} id="ChatMain">
           <div class={styles.EndOfMessages}>{"That's every message!"}</div>
           <MessagesList />
-          {/* 
-             <MessageWithoutAvatar> chat in direct </MessageWithoutAvatar> 
-          */}
         </div>
         <ChatInputForm />
       </div>
