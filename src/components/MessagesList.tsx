@@ -11,34 +11,46 @@ const MessagesList: Component = () => {
 
   return (
     <Show when={store.directs.get(`${params.email}@gmail.com`)}>
-      <div>
-        <div class={styles.Day}>
-          <div class={styles.DayLine} />
-          <div class={styles.DayText}>12/6/2018</div>
-          <div class={styles.DayLine} />
-        </div>
-      </div>
-      <For each={store.directs.get(`${params.email}@gmail.com`)!.chats}>
-        {(message) => {
-          const profile = store.profile;
-          const activeDirect = store.directs.get(`${params.email}@gmail.com`)!;
-          if (!profile) return null;
+      <For each={[...store.directs.get(`${params.email}@gmail.com`)!.chats]}>
+        {(messageGroup) => {
+          const date = messageGroup[0];
+          const messages = messageGroup[1];
           return (
-            <MessageWithAvatar
-              image={
-                activeDirect.receiver._id === message.from
-                  ? activeDirect.receiver.image
-                  : profile.image
-              }
-              username={
-                activeDirect.receiver._id === message.from
-                  ? activeDirect.receiver.displayName
-                  : profile.displayName
-              }
-              createdAt={dayjs(message.created_at).format("HH:MM a")}
-            >
-              {message.content}
-            </MessageWithAvatar>
+            <>
+              <div>
+                <div class={styles.Day}>
+                  <div class={styles.DayLine} />
+                  <div class={styles.DayText}>{date}</div>
+                  <div class={styles.DayLine} />
+                </div>
+              </div>
+              <For each={messages}>
+                {(message) => {
+                  const profile = store.profile;
+                  const activeDirect = store.directs.get(
+                    `${params.email}@gmail.com`
+                  )!;
+                  if (!profile) return null;
+                  return (
+                    <MessageWithAvatar
+                      image={
+                        activeDirect.receiver._id === message.from
+                          ? activeDirect.receiver.image
+                          : profile.image
+                      }
+                      username={
+                        activeDirect.receiver._id === message.from
+                          ? activeDirect.receiver.displayName
+                          : profile.displayName
+                      }
+                      createdAt={dayjs(message.created_at).format("HH:MM a")}
+                    >
+                      {message.content}
+                    </MessageWithAvatar>
+                  );
+                }}
+              </For>
+            </>
           );
         }}
       </For>

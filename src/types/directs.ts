@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { MessageType } from "./message";
 import { UserType } from "./user";
 
@@ -13,7 +14,7 @@ export type DirectApiType = {
 export type DirectsApiType = DirectApiType[];
 
 export type DirectType = {
-  chats: MessageType[];
+  chats: Map<string, MessageType[]>;
   _id: string;
   receiver: UserType;
   created_at: string;
@@ -37,8 +38,28 @@ export function generateDirectItem(direct: DirectApiType, receiver: UserType) {
   return {
     receiver,
     _id: direct._id,
-    chats: direct.chats,
+    chats: reshapeChats(direct.chats),
     created_at: direct.created_at,
     updated_at: direct.updated_at,
   };
+}
+
+export function reshapeChats(chatsData: MessageType[]) {
+  let chats = new Map<string, MessageType[]>();
+  let originalChatsDataClone = [...chatsData];
+
+  originalChatsDataClone.map((chatItem) => {
+    if (chats.has(dayjs(chatItem.created_at).format("YYYY/MM/DD"))) {
+      chats.set(dayjs(chatItem.created_at).format("YYYY/MM/DD"), [
+        ...(chats.get(
+          dayjs(chatItem.created_at).format("YYYY/MM/DD")
+        ) as MessageType[]),
+        chatItem,
+      ]);
+    } else {
+      chats.set(dayjs(chatItem.created_at).format("YYYY/MM/DD"), [chatItem]);
+    }
+  });
+
+  return chats;
 }

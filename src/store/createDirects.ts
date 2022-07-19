@@ -2,7 +2,6 @@ import { createResource, createSignal } from "solid-js";
 import type { Resource } from "solid-js";
 import {
   DirectApiType,
-  DirectsApiType,
   DirectsType,
   generateDirectItem,
   generateDirectsMap,
@@ -11,6 +10,8 @@ import { Actions } from ".";
 import { DirectsAgent } from "./agent/directs-agent/DirectsAgent";
 import { StoreType } from "../types/store";
 import { scrollToEndOfList } from "../components/ChatInputForm";
+import { MessageType } from "../types/message";
+import dayjs from "dayjs";
 
 // TODO : fix any
 
@@ -40,11 +41,24 @@ export default function createDirects(
     loadDirects(value: string | null) {
       setDirectsSource(value);
     },
-    addMessage(createdMessage: any) {
+    addMessage(createdMessage: MessageType) {
+      console.log("created message is:", createdMessage);
       const directsMapClone = new Map(directs());
+      const createdDate = dayjs(createdMessage.created_at).format("YYYY/MM/DD");
       directsMapClone?.forEach((direct) => {
-        if (direct._id === createdMessage.room) {
-          direct.chats = [...direct.chats, createdMessage];
+        if (
+          direct._id === createdMessage.room &&
+          direct.chats.has(createdDate)
+        ) {
+          direct.chats.set(createdDate, [
+            ...(direct.chats.get(createdDate) || []),
+            createdMessage,
+          ]);
+        } else if (
+          direct._id === createdMessage.room &&
+          !direct.chats.has(createdDate)
+        ) {
+          direct.chats.set(createdDate, [createdMessage]);
         }
       });
       mutate(directsMapClone);
@@ -68,7 +82,6 @@ export default function createDirects(
         }
       }
     },
-
     async receiveDirect(addedDirect) {
       const directsMap = new Map(directs());
       const receiver =
