@@ -1,8 +1,14 @@
 import { Outlet, useNavigate } from "solid-app-router";
-import { Component, createComputed, lazy, onCleanup, Show } from "solid-js";
+import {
+  Component,
+  createComputed,
+  lazy,
+  onCleanup,
+  Show,
+  Suspense,
+} from "solid-js";
 import { useStore } from "../store";
 import styles from "./styles/App.module.css";
-
 const Sidebar = lazy(() => import("../components/Sidebar"));
 
 const App: Component = () => {
@@ -23,7 +29,9 @@ const App: Component = () => {
 
   return (
     <div class={styles.App}>
-      <Sidebar />
+      <Suspense fallback={"loading...."}>
+        <Sidebar />
+      </Suspense>
       <Show
         when={store.socketConnection}
         fallback={<h2 class={styles.socketConnection}>connecting...</h2>}
