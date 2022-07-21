@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { useParams } from "solid-app-router";
 import { Component, For, Show } from "solid-js";
 import { useStore } from "../store";
-import { MessageWithAvatar } from "./Chat";
+import { MessageWithAvatar, MessageWithoutAvatar } from "./Chat";
 import styles from "./styles/Chat.module.css";
 
 const MessagesList: Component = () => {
@@ -15,6 +15,7 @@ const MessagesList: Component = () => {
         {(messageGroup) => {
           const date = messageGroup[0];
           const messages = messageGroup[1];
+          let previousMessage = "";
           return (
             <>
               <div>
@@ -26,12 +27,18 @@ const MessagesList: Component = () => {
               </div>
               <For each={messages}>
                 {(message) => {
+                  let withoutAvatar = previousMessage === message.from;
+                  previousMessage = message.from;
                   const profile = store.profile;
                   const activeDirect = store.directs.get(
                     `${params.email}@gmail.com`
                   )!;
                   if (!profile) return null;
-                  return (
+                  return withoutAvatar ? (
+                    <MessageWithoutAvatar>
+                      {message.content}
+                    </MessageWithoutAvatar>
+                  ) : (
                     <MessageWithAvatar
                       image={
                         activeDirect.receiver._id === message.from
