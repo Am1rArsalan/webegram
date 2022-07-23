@@ -34,7 +34,13 @@ export const MessageWithAvatar: Component<
   );
 };
 
-export const MessageWithoutAvatar: Component<ParentProps> = ({ children }) => {
+type MessageWithoutAvatarProps = {
+  disabled?: boolean;
+};
+
+export const MessageWithoutAvatar: Component<
+  ParentProps<MessageWithoutAvatarProps>
+> = ({ children }) => {
   return (
     <div class={classNames(styles.Message, styles.noAvatar)}>
       <div class={styles.MessageContent}>{children}</div>
