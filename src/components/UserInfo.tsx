@@ -12,7 +12,7 @@ const UserInfo: Component<
         alt="user-avatar"
         src={image}
       />
-      <div>
+      <div class={styles.ContentContainer}>
         <div>{displayName}</div>
         <div>{children}</div>
       </div>
