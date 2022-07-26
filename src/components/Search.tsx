@@ -19,11 +19,7 @@ const Search = () => {
       />
       {value()}
       <br />
-      <For
-        each={store.users.filter(
-          (item) => !store.profile?.directs?.includes(item._id)
-        )}
-      >
+      <For each={store.users.filter((item) => !store.directs.has(item.email))}>
         {(user) => {
           return (
             <li
