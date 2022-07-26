@@ -3,9 +3,10 @@ import { useStore } from "../store";
 import ChannelList from "./ChannelList";
 import Search from "./Search";
 import styles from "./styles/Sidebar.module.css";
-import { classNames } from "./UI/utils/classNames";
 import UserInfo from "./UserInfo";
 import DirectsList from "./DirectsList";
+import { Button, IconButton } from "./UI/button";
+import { Plus } from "./UI/icons/Plus";
 
 const Sidebar: Component = () => {
   const [store, { logout }] = useStore();
@@ -16,12 +17,15 @@ const Sidebar: Component = () => {
         displayName={store.profile?.displayName || ""}
         image={store.profile?.image || ""}
       >
-        <button
-          class={classNames(styles.text, styles.button)}
-          onClick={() => logout()}
-        >
-          logout
-        </button>
+        <div style={{ display: "flex", "justify-content": "space-evenly" }}>
+          <Button class={styles.textButton} onClick={() => logout()}>
+            logout
+          </Button>
+
+          <IconButton class={styles.addChannelButton}>
+            <Plus fill="#000" width={11} height={11} />
+          </IconButton>
+        </div>
       </UserInfo>
       <nav class={styles.ChannelNav}>
         <ChannelList />
