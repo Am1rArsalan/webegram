@@ -5,6 +5,7 @@ specifiers:
   socket.io-client: ^4.5.1
   solid-app-router: ^0.3.3
   solid-js: ^1.4.2
+  solid-popover: ^0.0.1
   typescript: ^4.6.4
   vite: ^2.9.9
   vite-plugin-solid: ^2.2.6
@@ -14,6 +15,7 @@ dependencies:
   socket.io-client: 4.5.1
   solid-app-router: 0.3.3_solid-js@1.4.2
   solid-js: 1.4.2
+  solid-popover: 0.0.1_solid-js@1.4.2
 
 devDependencies:
   typescript: 4.6.4
@@ -852,6 +854,14 @@ packages:
 
   /solid-js/1.4.2:
     resolution: {integrity: sha512-IU5yKuT8P/n5F5g8j1rTXqxUdPYmoZDk/074TG94AEYf/nyXAeG82BSge4/lLIbCfUcnGUJ6DRdebIjujOAYyg==}
+
+  /solid-popover/0.0.1_solid-js@1.4.2:
+    resolution: {integrity: sha512-+21E1WeCF6uCWpTJuO74w0LOkEKJZems5HJCvWssqH2J/yuZXaYnwoTLiqFGIgIdBSTmAkXat2in+knfxZtfGg==}
+    peerDependencies:
+      solid-js: ^1.1.0
+    dependencies:
+      solid-js: 1.4.2
+    dev: false
 
   /solid-refresh/0.4.0_solid-js@1.4.2:
     resolution: {integrity: sha512-5XCUz845n/sHPzKK2i2G2EeV61tAmzv6SqzqhXcPaYhrgzVy7nKTQaBpKK8InKrriq9Z2JFF/mguIU00t/73xw==}

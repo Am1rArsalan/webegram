@@ -1,4 +1,4 @@
-import { Component } from "solid-js";
+import { createSignal } from "solid-js";
 import { useStore } from "../store";
 import ChannelList from "./ChannelList";
 import Search from "./Search";
@@ -7,24 +7,59 @@ import UserInfo from "./UserInfo";
 import DirectsList from "./DirectsList";
 import { Button, IconButton } from "./UI/button";
 import { Plus } from "./UI/icons/Plus";
+import { Popover } from "solid-popover";
+import { Input } from "./UI/input/Input";
 
-const Sidebar: Component = () => {
+function Sidebar() {
   const [store, { logout }] = useStore();
+  const [isOpen, setIsOpen] = createSignal(false);
+  const togglePopover = () => setIsOpen(!isOpen());
+  let popoverContainerRef;
 
   return (
-    <div class={styles.Nav}>
+    <div class={styles.Nav} ref={popoverContainerRef}>
       <UserInfo
         displayName={store.profile?.displayName || ""}
         image={store.profile?.image || ""}
       >
-        <div style={{ display: "flex", "justify-content": "space-evenly" }}>
+        <div class={styles.NavUser}>
           <Button class={styles.textButton} onClick={() => logout()}>
             logout
           </Button>
-
-          <IconButton class={styles.addChannelButton}>
-            <Plus fill="#000" width={11} height={11} />
-          </IconButton>
+          <Popover
+            parentElement={popoverContainerRef}
+            isOpen={isOpen()}
+            content={
+              <form
+                class={styles.AddGroupForm}
+                onSubmit={(ev) => {
+                  ev.preventDefault();
+                  console.log("onSubmit");
+                  togglePopover();
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    "justify-content": "space-between",
+                  }}
+                >
+                  <label> group name: </label>
+                  <Input />
+                </div>
+                <Button style={{ width: "100%", height: "2rem" }} type="submit">
+                  add Group
+                </Button>
+              </form>
+            }
+            onClickOutside={() => setIsOpen(false)}
+            positions={["bottom", "right", "top", "left"]}
+            spacing={7}
+          >
+            <IconButton onClick={togglePopover} class={styles.addChannelButton}>
+              <Plus fill="#000" width={11} height={11} />
+            </IconButton>
+          </Popover>
         </div>
       </UserInfo>
       <nav class={styles.ChannelNav}>
@@ -38,6 +73,6 @@ const Sidebar: Component = () => {
       </nav>
     </div>
   );
-};
+}
 
 export default Sidebar;
