@@ -4,7 +4,7 @@ import { useStore } from "../store";
 import styles from "./styles/UsersList.module.css";
 import UserInfo from "./UserInfo";
 
-const DirectsList: Component = () => {
+function DirectsList() {
   const [store] = useStore();
 
   return (
@@ -31,6 +31,6 @@ const DirectsList: Component = () => {
       </For>
     </ul>
   );
-};
+}
 
 export default DirectsList;

@@ -2,7 +2,7 @@ import { NavLink } from "solid-app-router";
 import { For } from "solid-js";
 import styles from "./styles/Sidebar.module.css";
 
-const ChannelList = () => {
+function ChannelList() {
   return (
     <For each={["awesome", "general"]}>
       {(title: string) => (
@@ -16,6 +16,6 @@ const ChannelList = () => {
       )}
     </For>
   );
-};
+}
 
 export default ChannelList;

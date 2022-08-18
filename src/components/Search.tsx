@@ -2,7 +2,7 @@ import { useNavigate } from "solid-app-router";
 import { createSignal, For } from "solid-js";
 import { useStore } from "../store";
 
-const Search = () => {
+function Search() {
   const [value, setValue] = createSignal("");
   const [store, { updateSearchQuery, addToDirects, resetSearchedUsers }] =
     useStore();
@@ -37,6 +37,6 @@ const Search = () => {
       </For>
     </ul>
   );
-};
+}
 
 export default Search;

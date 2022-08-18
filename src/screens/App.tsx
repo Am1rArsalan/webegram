@@ -1,17 +1,10 @@
 import { Outlet, useNavigate } from "solid-app-router";
-import {
-  Component,
-  createComputed,
-  lazy,
-  onCleanup,
-  Show,
-  Suspense,
-} from "solid-js";
+import { createComputed, lazy, onCleanup, Show, Suspense } from "solid-js";
 import { useStore } from "../store";
 import styles from "./styles/App.module.css";
 const Sidebar = lazy(() => import("../components/Sidebar"));
 
-const App: Component = () => {
+function App() {
   const nav = useNavigate();
   const [store, { resetSocketConnection, loadDirects }] = useStore();
 
@@ -41,6 +34,6 @@ const App: Component = () => {
       <Outlet />
     </div>
   );
-};
+}
 
 export default App;

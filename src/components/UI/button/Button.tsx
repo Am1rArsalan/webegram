@@ -5,7 +5,7 @@ import { ElementType, HtmlProps } from "../../../types/helper";
 
 export type ButtonProps<C extends ElementType = "button"> = HtmlProps<C>;
 
-export const Button: Component<ButtonProps> = (props) => {
+export function Button(props: ButtonProps) {
   const { children } = props;
 
   const propsWithDefault: ButtonProps<"button"> = mergeProps(props);
@@ -24,4 +24,4 @@ export const Button: Component<ButtonProps> = (props) => {
       {children}
     </button>
   );
-};
+}

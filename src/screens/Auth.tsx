@@ -1,8 +1,7 @@
-import { Component } from "solid-js";
 import { Button } from "../components/UI/button";
 import styles from "./styles/App.module.css";
 
-const Auth: Component = () => {
+function Auth() {
   return (
     <div class={styles.Auth}>
       <a href="http://localhost:8080/auth/google">
@@ -11,6 +10,6 @@ const Auth: Component = () => {
       <div class={styles.Background} />
     </div>
   );
-};
+}
 
 export default Auth;

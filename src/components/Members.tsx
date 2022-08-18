@@ -1,8 +1,7 @@
-import { Component } from "solid-js";
 import { classNames } from "./UI/utils/classNames";
 import styles from "./styles/Members.module.css";
 
-const Members: Component = () => {
+function Members() {
   return (
     <div class={styles.Members}>
       <div>
@@ -17,6 +16,6 @@ const Members: Component = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Members;

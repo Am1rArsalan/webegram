@@ -9,9 +9,13 @@ type MessageWithAvatarProps = {
   createdAt: string;
 };
 
-export const MessageWithAvatar: Component<
-  ParentProps<MessageWithAvatarProps>
-> = ({ children, username, image, createdAt, disabled = false }) => {
+export function MessageWithAvatar({
+  children,
+  username,
+  image,
+  createdAt,
+  disabled = false,
+}: ParentProps<MessageWithAvatarProps>) {
   // TODO : add default avatar for non existence of the profile pic
   return (
     <div class={classNames(styles.Message, styles.withAvatar)}>
@@ -32,18 +36,18 @@ export const MessageWithAvatar: Component<
       </div>
     </div>
   );
-};
+}
 
 type MessageWithoutAvatarProps = {
   disabled?: boolean;
 };
 
-export const MessageWithoutAvatar: Component<
-  ParentProps<MessageWithoutAvatarProps>
-> = ({ children }) => {
+export function MessageWithoutAvatar({
+  children,
+}: ParentProps<MessageWithoutAvatarProps>) {
   return (
     <div class={classNames(styles.Message, styles.noAvatar)}>
       <div class={styles.MessageContent}>{children}</div>
     </div>
   );
-};
+}

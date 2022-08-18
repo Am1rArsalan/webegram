@@ -10,7 +10,7 @@ export function scrollToEndOfList() {
   }
 }
 
-const ChatInputForm: Component = () => {
+function ChatInputForm() {
   const [message, setMessage] = createSignal("");
   const [_, { sendMessage }] = useStore();
   const params = useParams();
@@ -34,6 +34,6 @@ const ChatInputForm: Component = () => {
       />
     </form>
   );
-};
+}
 
 export default ChatInputForm;

@@ -4,7 +4,7 @@ import styles from "./styles/Chat.module.css";
 import MessagesList from "./MessagesList";
 import ChatInputForm from "./ChatInputForm";
 
-const DirectChat: Component = () => {
+function DirectChat() {
   const params = useParams();
 
   return (
@@ -24,6 +24,6 @@ const DirectChat: Component = () => {
       </div>
     </div>
   );
-};
+}
 
 export default DirectChat;

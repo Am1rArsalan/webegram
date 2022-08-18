@@ -5,7 +5,7 @@ import { useStore } from "../store";
 import { MessageWithAvatar, MessageWithoutAvatar } from "./Chat";
 import styles from "./styles/Chat.module.css";
 
-const MessagesList: Component = () => {
+function MessagesList() {
   const [store] = useStore();
   const params = useParams();
 
@@ -63,6 +63,6 @@ const MessagesList: Component = () => {
       </For>
     </Show>
   );
-};
+}
 
 export default MessagesList;

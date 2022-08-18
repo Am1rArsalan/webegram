@@ -1,4 +1,4 @@
-import { Accessor, Component, createContext, useContext } from "solid-js";
+import { Accessor, createContext, useContext } from "solid-js";
 import { ParentProps, Resource } from "solid-js";
 import { createStore } from "solid-js/store";
 import { StoreType } from "../types/store";
@@ -31,7 +31,7 @@ const StoreContext = createContext<StoreContextType>([
   Object({}),
 ]);
 
-export const Provider: Component<ParentProps> = (props) => {
+export function Provider(props: ParentProps) {
   let profile: Resource<ProfileType | undefined>;
   let users: Resource<UserType[] | undefined>;
   let directs: Resource<DirectsType | undefined>;
@@ -62,7 +62,7 @@ export const Provider: Component<ParentProps> = (props) => {
     },
   });
 
-  // FIXMe  : as ...
+  // FIXME : as...
   const actions: Actions = Object({});
   const store: StoreContextType = [state as StoreType, actions];
   const agent = createAgent(store);
@@ -79,7 +79,7 @@ export const Provider: Component<ParentProps> = (props) => {
       {props.children}
     </StoreContext.Provider>
   );
-};
+}
 
 export function useStore() {
   const store = useContext(StoreContext);

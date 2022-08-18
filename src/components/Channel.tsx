@@ -5,7 +5,7 @@ import ChatInputForm from "./ChatInputForm";
 import Members from "./Members";
 import styles from "./styles/Chat.module.css";
 
-const Channel: Component = () => {
+function Channel() {
   const params = useParams();
 
   return (
@@ -34,6 +34,6 @@ const Channel: Component = () => {
       <Members />
     </div>
   );
-};
+}
 
 export default Channel;

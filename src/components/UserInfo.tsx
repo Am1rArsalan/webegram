@@ -1,9 +1,11 @@
 import { Component, ParentProps } from "solid-js";
 import styles from "./styles/UserInfo.module.css";
 
-const UserInfo: Component<
-  ParentProps<{ displayName: string; image: string }>
-> = ({ displayName, image, children }) => {
+function UserInfo({
+  displayName,
+  image,
+  children,
+}: ParentProps<{ displayName: string; image: string }>) {
   return (
     <li class={styles.User}>
       <img
@@ -18,6 +20,6 @@ const UserInfo: Component<
       </div>
     </li>
   );
-};
+}
 
 export default UserInfo;
