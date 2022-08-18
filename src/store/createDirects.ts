@@ -42,7 +42,6 @@ export default function createDirects(
       setDirectsSource(value);
     },
     addMessage(createdMessage: MessageType) {
-      console.log("created message is:", createdMessage);
       const directsMapClone = new Map(directs());
       const createdDate = dayjs(createdMessage.created_at).format("YYYY/MM/DD");
       directsMapClone?.forEach((direct) => {
