@@ -18,50 +18,65 @@ function Sidebar() {
 
   return (
     <div class={styles.Nav} ref={popoverContainerRef}>
-      <UserInfo
-        displayName={store.profile?.displayName || ""}
-        image={store.profile?.image || ""}
+      <div
+        style={{
+          width: "90%",
+          margin: "1rem auto",
+          display: "flex",
+          "justify-content": "center",
+        }}
       >
-        <div class={styles.NavUser}>
-          <Button class={styles.textButton} onClick={() => logout()}>
-            logout
-          </Button>
-          <Popover
-            parentElement={popoverContainerRef}
-            isOpen={isOpen()}
-            content={
-              <form
-                class={styles.AddGroupForm}
-                onSubmit={(ev) => {
-                  ev.preventDefault();
-                  console.log("onSubmit");
-                  togglePopover();
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    "justify-content": "space-between",
+        <UserInfo
+          displayName={store.profile?.displayName || ""}
+          image={store.profile?.image || ""}
+        >
+          <div class={styles.NavUser}>
+            <Button class={styles.textButton} onClick={() => logout()}>
+              logout
+            </Button>
+            <Popover
+              parentElement={popoverContainerRef}
+              isOpen={isOpen()}
+              content={
+                <form
+                  class={styles.AddGroupForm}
+                  onSubmit={(ev) => {
+                    ev.preventDefault();
+                    console.log("onSubmit");
+                    togglePopover();
                   }}
                 >
-                  <label> group name: </label>
-                  <Input />
-                </div>
-                <Button style={{ width: "100%", height: "2rem" }} type="submit">
-                  add Group
-                </Button>
-              </form>
-            }
-            onClickOutside={() => setIsOpen(false)}
-            positions={["bottom", "right", "top", "left"]}
-            spacing={7}
-          >
-            <IconButton onClick={togglePopover} class={styles.addChannelButton}>
-              <Plus fill="#000" width={11} height={11} />
-            </IconButton>
-          </Popover>
-        </div>
-      </UserInfo>
+                  <div
+                    style={{
+                      display: "flex",
+                      "justify-content": "space-between",
+                    }}
+                  >
+                    <label> group name: </label>
+                    <Input />
+                  </div>
+                  <Button
+                    style={{ width: "100%", height: "2rem" }}
+                    type="submit"
+                  >
+                    add Group
+                  </Button>
+                </form>
+              }
+              onClickOutside={() => setIsOpen(false)}
+              positions={["bottom", "right", "top", "left"]}
+              spacing={7}
+            >
+              <IconButton
+                onClick={togglePopover}
+                class={styles.addChannelButton}
+              >
+                <Plus fill="#000" width={11} height={11} />
+              </IconButton>
+            </Popover>
+          </div>
+        </UserInfo>
+      </div>
       <nav class={styles.ChannelNav}>
         <ChannelList />
         <br />

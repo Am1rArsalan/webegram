@@ -11,4 +11,13 @@
   font-weight: 900;
   overflow: hidden;
   color: black;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.DirectsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0;
 }

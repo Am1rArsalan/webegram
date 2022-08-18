@@ -1,5 +1,5 @@
 import { NavLink } from "solid-app-router";
-import { Component, For } from "solid-js";
+import { For } from "solid-js";
 import { useStore } from "../store";
 import styles from "./styles/UsersList.module.css";
 import UserInfo from "./UserInfo";
@@ -8,7 +8,7 @@ function DirectsList() {
   const [store] = useStore();
 
   return (
-    <ul>
+    <ul class={styles.DirectsList}>
       <For each={Array.from(store.directs.values())}>
         {(direct) => {
           return (
