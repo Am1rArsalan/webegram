@@ -4,8 +4,8 @@ import styles from "./styles/App.module.css";
 function Auth() {
   return (
     <div class={styles.Auth}>
-      <a href="http://localhost:8080/auth/google">
-        <Button class={styles.SignInButton}> Sign In</Button>
+      <a href="http://localhost:8080/auth/google" class={styles.AuthButtonLink}>
+        <Button class={styles.AuthButton}> Sign In</Button>
       </a>
       <div class={styles.Background} />
     </div>
