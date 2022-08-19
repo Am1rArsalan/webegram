@@ -8,7 +8,7 @@ import DirectsList from "./DirectsList";
 import { Button, IconButton } from "./UI/button";
 import { Plus } from "./UI/icons/Plus";
 import { Popover } from "solid-popover";
-import { Input } from "./UI/input/Input";
+import AddGroupForm from "./AddGroupForm";
 
 function Sidebar() {
   const [store, { logout }] = useStore();
@@ -37,32 +37,7 @@ function Sidebar() {
             <Popover
               parentElement={popoverContainerRef}
               isOpen={isOpen()}
-              content={
-                <form
-                  class={styles.AddGroupForm}
-                  onSubmit={(ev) => {
-                    ev.preventDefault();
-                    console.log("onSubmit");
-                    togglePopover();
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      "justify-content": "space-between",
-                    }}
-                  >
-                    <label> group name: </label>
-                    <Input />
-                  </div>
-                  <Button
-                    style={{ width: "100%", height: "2rem" }}
-                    type="submit"
-                  >
-                    add Group
-                  </Button>
-                </form>
-              }
+              content={<AddGroupForm closeForm={togglePopover} />}
               onClickOutside={() => setIsOpen(false)}
               positions={["bottom", "right", "top", "left"]}
               spacing={7}
