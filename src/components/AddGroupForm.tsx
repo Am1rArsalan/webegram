@@ -1,23 +1,37 @@
-import { ParentProps } from "solid-js";
+import { createSignal, ParentProps } from "solid-js";
+import { useStore } from "../store";
 import styles from "./styles/Sidebar.module.css";
 import { Button } from "./UI/button";
 import { Input } from "./UI/input/Input";
 
 function AddGroupForm(props: { closeForm: () => void }) {
+  const [groupName, setGroupName] = createSignal("");
+  const [groupSlug, setGroupSlug] = createSignal("");
+  const [_, { createRoom }] = useStore();
+
   return (
     <form
       class={styles.AddGroupForm}
       onSubmit={(ev) => {
         ev.preventDefault();
-        console.log("onSubmit");
+        const slug = groupSlug();
+        const name = groupName();
+        if (name.length < 3) return;
+        createRoom(name, slug);
         props.closeForm();
       }}
     >
       <FormGroup label="group-name">
-        <Input />
+        <Input
+          value={groupName()}
+          onChange={(ev) => setGroupName(ev.currentTarget.value)}
+        />
       </FormGroup>
-      <FormGroup label="group-cover">
-        <Input />
+      <FormGroup label="group-slug">
+        <Input
+          value={groupSlug()}
+          onChange={(ev) => setGroupSlug(ev.currentTarget.value)}
+        />
       </FormGroup>
       <Button style={{ width: "100%", height: "2rem" }} type="submit">
         add Group
