@@ -12,11 +12,14 @@ import createDirects, { DirectsActions } from "./createDirects";
 import createSocketConnection, {
   SocketActions,
 } from "./createSocketConnection";
+import { RoomType } from "../types/rooms";
+import createRooms, { RoomActions } from "./createRooms";
 
 export type Actions = ProfileActions &
   UsersActions &
   DirectsActions &
-  SocketActions;
+  SocketActions &
+  RoomActions;
 
 export type StoreContextType = [StoreType, Actions];
 
@@ -26,6 +29,7 @@ const StoreContext = createContext<StoreContextType>([
     profile: undefined,
     users: [],
     directs: new Map(),
+    rooms: [],
     socketConnection: false,
   },
   Object({}),
@@ -35,6 +39,7 @@ export function Provider(props: ParentProps) {
   let profile: Resource<ProfileType | undefined>;
   let users: Resource<UserType[] | undefined>;
   let directs: Resource<DirectsType | undefined>;
+  let rooms: Resource<RoomType[] | undefined>;
   let socketConnection: Accessor<boolean>;
 
   const queryParams = new URLSearchParams(location.search);
@@ -57,6 +62,10 @@ export function Provider(props: ParentProps) {
       const usersData = users();
       return usersData ? usersData : [];
     },
+    get rooms() {
+      const roomsData = rooms();
+      return roomsData ? roomsData : [];
+    },
     get socketConnection() {
       return socketConnection ? socketConnection() : false;
     },
@@ -69,6 +78,7 @@ export function Provider(props: ParentProps) {
   profile = createProfile(actions, agent.profile, setState);
   users = createUsers(state as StoreType, actions, agent.users);
   directs = createDirects(state as StoreType, actions, agent.directs);
+  createRooms(state as StoreType, actions, agent.rooms);
 
   if (state.token) {
     socketConnection = createSocketConnection(state as StoreType, actions);
