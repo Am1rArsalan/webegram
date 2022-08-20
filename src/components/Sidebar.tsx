@@ -40,7 +40,7 @@ function Sidebar() {
               content={<AddGroupForm closeForm={togglePopover} />}
               onClickOutside={() => setIsOpen(false)}
               positions={["bottom", "right", "top", "left"]}
-              spacing={7}
+              spacing={10}
             >
               <IconButton
                 onClick={togglePopover}
