@@ -5,6 +5,6 @@ export type RoomType = {
   chats: MessageType[];
   members: string[];
   admin: string;
-  cover?: string;
+  slug: string;
   name: string;
 };

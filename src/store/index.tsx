@@ -78,7 +78,7 @@ export function Provider(props: ParentProps) {
   profile = createProfile(actions, agent.profile, setState);
   users = createUsers(state as StoreType, actions, agent.users);
   directs = createDirects(state as StoreType, actions, agent.directs);
-  createRooms(state as StoreType, actions, agent.rooms);
+  rooms = createRooms(state as StoreType, actions, agent.rooms);
 
   if (state.token) {
     socketConnection = createSocketConnection(state as StoreType, actions);
