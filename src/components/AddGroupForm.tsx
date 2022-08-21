@@ -17,7 +17,7 @@ function AddGroupForm(props: { closeForm: () => void }) {
         const slug = groupSlug();
         const name = groupName();
         if (name.length < 3) return;
-        createRoom(name, slug);
+        createRoom(name, slug.trim().replaceAll(/[ ]{1,}/g, "-"));
         props.closeForm();
       }}
     >
