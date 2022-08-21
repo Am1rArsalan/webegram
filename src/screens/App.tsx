@@ -6,14 +6,16 @@ const Sidebar = lazy(() => import("../components/Sidebar"));
 
 function App() {
   const nav = useNavigate();
-  const [store, { resetSocketConnection, loadDirects }] = useStore();
+  const [store, { resetSocketConnection, loadDirects, loadRooms }] = useStore();
 
   if (!store.token) {
     nav("/auth");
   }
 
   createComputed(() => {
-    loadDirects(store.profile?.email ? store.profile?.email : null);
+    const currUser = store.profile?.email ? store.profile.email : null;
+    loadDirects(currUser);
+    loadRooms(currUser);
   });
 
   onCleanup(() => {

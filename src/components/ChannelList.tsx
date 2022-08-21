@@ -1,17 +1,19 @@
 import { NavLink } from "solid-app-router";
 import { For } from "solid-js";
+import { useStore } from "../store";
 import styles from "./styles/Sidebar.module.css";
 
 function ChannelList() {
+  const [store] = useStore();
   return (
-    <For each={["awesome", "general"]}>
-      {(title: string) => (
+    <For each={store.rooms}>
+      {(room) => (
         <NavLink
           class={styles.ChanelLink}
           activeClass={styles.ActiveLink}
-          href={`/channel/${title}`}
+          href={`/channel/${room.slug}`}
         >
-          # {title}
+          # {room.name}
         </NavLink>
       )}
     </For>

@@ -19,7 +19,7 @@ const AppWithAuth = () => {
   return (
     <Routes>
       <Route path="/" component={App}>
-        <Route path="channel/:name" component={Channel} />
+        <Route path="channel/:slug" component={Channel} />
         <Route path="user/:email" component={DirectChat} />
         <Route path="*" component={Welcome} />
       </Route>
