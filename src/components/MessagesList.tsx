@@ -1,17 +1,18 @@
 import dayjs from "dayjs";
 import { useParams } from "solid-app-router";
-import { Component, For, Show } from "solid-js";
+import { For, Show } from "solid-js";
 import { useStore } from "../store";
+import { MessageType } from "../types/message";
 import { MessageWithAvatar, MessageWithoutAvatar } from "./Chat";
 import styles from "./styles/Chat.module.css";
 
-function MessagesList() {
+function MessagesList(props: { messages?: Map<string, MessageType[]> }) {
   const [store] = useStore();
   const params = useParams();
 
   return (
-    <Show when={store.directs.get(`${params.email}@gmail.com`)}>
-      <For each={[...store.directs.get(`${params.email}@gmail.com`)!.chats]}>
+    <Show when={props.messages !== undefined}>
+      <For each={props.messages ? [...props.messages] : []}>
         {(messageGroup) => {
           const date = messageGroup[0];
           const messages = messageGroup[1];
