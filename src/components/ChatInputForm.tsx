@@ -1,10 +1,10 @@
 import { useParams } from "solid-app-router";
-import { Component, createSignal } from "solid-js";
+import { createSignal } from "solid-js";
 import { useStore } from "../store";
 import styles from "./styles/ChatInputForm.module.css";
 
 export function scrollToEndOfList() {
-  const chatContainer = document.querySelector("#ChatMain") as HTMLDivElement;
+  const chatContainer = document.querySelector("#ChatMain");
   if (chatContainer) {
     chatContainer.scrollTop = chatContainer.scrollHeight;
   }
@@ -19,9 +19,7 @@ function ChatInputForm() {
     ev.preventDefault();
     if (message().length === 0) return;
     params.email && sendMessage(message(), params.email);
-
     setMessage("");
-    scrollToEndOfList();
   };
 
   return (

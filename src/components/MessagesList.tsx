@@ -1,14 +1,21 @@
 import dayjs from "dayjs";
 import { useParams } from "solid-app-router";
-import { For, Show } from "solid-js";
+import { For, Show, createEffect } from "solid-js";
 import { useStore } from "../store";
 import { MessageType } from "../types/message";
 import { MessageWithAvatar, MessageWithoutAvatar } from "./Chat";
+import { scrollToEndOfList } from "./ChatInputForm";
 import styles from "./styles/Chat.module.css";
 
-function MessagesList(props: { messages?: Map<string, MessageType[]> }) {
+function MessagesList(props: { messages: Map<string, MessageType[]> }) {
   const [store] = useStore();
   const params = useParams();
+
+  createEffect(() => {
+    if (props.messages.size) {
+      scrollToEndOfList();
+    }
+  });
 
   return (
     <Show when={props.messages !== undefined}>
