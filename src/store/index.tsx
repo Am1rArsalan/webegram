@@ -71,7 +71,8 @@ export function Provider(props: ParentProps) {
     },
   });
 
-  // FIXME : as...
+  // FIXME : remove as type casting and
+  // fix ts warning on StoreContextType
   const actions: Actions = Object({});
   const store: StoreContextType = [state as StoreType, actions];
   const agent = createAgent(store);
