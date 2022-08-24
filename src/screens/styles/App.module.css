@@ -51,3 +51,16 @@
 .AuthButton:hover {
   box-shadow: 0 4px 10px #aaa;
 }
+
+.Nav {
+  background: #454545;
+  color: #fff;
+  width: 22.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.Nav + * {
+  display: flex;
+  flex: 1;
+}

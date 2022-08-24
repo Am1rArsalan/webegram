@@ -1,4 +1,3 @@
-import { createSignal } from "solid-js";
 import { useStore } from "../store";
 import ChannelList from "./ChannelList";
 import Search from "./Search";
@@ -9,15 +8,15 @@ import { Button, IconButton } from "./UI/button";
 import { Plus } from "./UI/icons/Plus";
 import { Popover } from "solid-popover";
 import AddGroupForm from "./AddGroupForm";
+import { createSignal } from "solid-js";
 
-function Sidebar() {
+function Sidebar(props: { popoverContainerRef?: HTMLDivElement }) {
   const [store, { logout }] = useStore();
   const [isOpen, setIsOpen] = createSignal(false);
   const togglePopover = () => setIsOpen(!isOpen());
-  let popoverContainerRef;
 
   return (
-    <div class={styles.Nav} ref={popoverContainerRef}>
+    <>
       <div
         style={{
           width: "90%",
@@ -35,7 +34,7 @@ function Sidebar() {
               logout
             </Button>
             <Popover
-              parentElement={popoverContainerRef}
+              parentElement={props.popoverContainerRef}
               isOpen={isOpen()}
               content={<AddGroupForm closeForm={togglePopover} />}
               onClickOutside={() => setIsOpen(false)}
@@ -61,7 +60,7 @@ function Sidebar() {
           <DirectsList />
         </div>
       </nav>
-    </div>
+    </>
   );
 }
 
