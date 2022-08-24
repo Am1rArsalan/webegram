@@ -1,16 +1,3 @@
-.Nav {
-  background: #454545;
-  color: #fff;
-  width: 22.5rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.Nav + * {
-  display: flex;
-  flex: 1;
-}
-
 .textButton {
   font: inherit;
   border: none;
