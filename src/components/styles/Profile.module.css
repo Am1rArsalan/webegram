@@ -1,0 +1,24 @@
+.ProfileContainer {
+  margin: 1rem auto;
+  display: flex;
+  justify-content: center;
+}
+
+.NavUser {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.textButton {
+  font: inherit;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: inline;
+  cursor: pointer;
+  font-size: 80%;
+}
+
+.addChannelButton {
+  padding: 0 0.6rem;
+}
