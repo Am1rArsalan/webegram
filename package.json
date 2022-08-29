@@ -18,7 +18,7 @@
     "dayjs": "^1.11.3",
     "socket.io-client": "^4.5.1",
     "solid-app-router": "^0.3.3",
-    "solid-js": "^1.4.2",
-    "solid-popover": "^0.0.2"
+    "solid-js": "^1.5.1",
+    "solid-popover": "^0.0.3"
   }
 }
