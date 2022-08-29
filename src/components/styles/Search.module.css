@@ -1,0 +1,66 @@
+.UsersList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  align-items: center;
+  padding: 0;
+}
+
+.UserListItem {
+  box-shadow: 0px 1px 2px #eee;
+  height: 2rem;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.7rem;
+  padding: 0.5rem 1rem;
+}
+
+.UserListItem:hover {
+  background-color: #eee;
+}
+
+.Divider {
+  content: "";
+  height: 0.2rem;
+  background-color: #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.Divider:last-child {
+  display: none;
+}
+
+.UserListItem:hover {
+  box-shadow: 0px 2px 4px #eee;
+  cursor: pointer;
+}
+
+.UserListItem span:nth-of-type(2) {
+  color: #000;
+  width: 9rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.UserListItem span:nth-of-type(1) img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.UserListItem span:nth-of-type(1) {
+  width: 2rem;
+  height: 2rem;
+  position: relative;
+}
+
+.SearchInput {
+  height: 2rem;
+  padding: 3px 0px;
+  font-size: 1.3rem;
+  width: 100%;
+}
