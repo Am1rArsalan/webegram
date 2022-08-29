@@ -1,10 +1,11 @@
-import { CreateRoomDto } from "../../../dtos/Room";
+import { AddMemberDto, CreateRoomDto } from "../../../dtos/Room";
 import { RoomType } from "../../../types/rooms";
 import { BaseAgentImpl } from "../BaseAgent";
 
 export interface RoomsAgent {
   createRoom(data: CreateRoomDto): Promise<RoomType>;
   fetchRooms(): Promise<RoomType[] | undefined>;
+  addMember(data: AddMemberDto): Promise<string>;
 }
 
 export class RoomsAgentImpl extends BaseAgentImpl implements RoomsAgent {
@@ -14,6 +15,15 @@ export class RoomsAgentImpl extends BaseAgentImpl implements RoomsAgent {
 
   fetchRooms() {
     return this.createFetchHttpRequest<RoomType[]>("GET", `/room`, "data");
+  }
+
+  addMember({ memberId, roomSlug, memberName }: AddMemberDto) {
+    return this.createHttpRequest<AddMemberDto>(
+      "PUT",
+      "/room/member/add",
+      { roomSlug, memberId, memberName },
+      "data"
+    );
   }
 
   createRoom(data: CreateRoomDto) {
