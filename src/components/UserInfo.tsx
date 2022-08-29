@@ -7,7 +7,7 @@ function UserInfo({
   children,
 }: ParentProps<{ displayName: string; image: string }>) {
   return (
-    <div class={styles.User}>
+    <li class={styles.User}>
       <img
         referrerpolicy="no-referrer"
         class={styles.UserImage}
@@ -18,7 +18,7 @@ function UserInfo({
         <div>{displayName}</div>
         <div>{children}</div>
       </div>
-    </div>
+    </li>
   );
 }
 
