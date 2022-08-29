@@ -4,7 +4,7 @@ import styles from "./styles/Sidebar.module.css";
 import { Button } from "./UI/button";
 import { Input } from "./UI/input/Input";
 
-function AddGroupForm(props: { closeForm: () => void }) {
+function AddChannelForm(props: { closeForm: () => void }) {
   const [groupName, setGroupName] = createSignal("");
   const [groupSlug, setGroupSlug] = createSignal("");
   const [_, { createRoom }] = useStore();
@@ -54,4 +54,4 @@ function FormGroup(props: ParentProps<{ label: string }>) {
   );
 }
 
-export default AddGroupForm;
+export default AddChannelForm;
