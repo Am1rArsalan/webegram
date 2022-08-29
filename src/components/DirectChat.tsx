@@ -10,11 +10,12 @@ function DirectChat() {
   const params = useParams();
   const [store] = useStore();
 
-  function getMessages() {
-    const room = store.directs.get(`${params.email}@gmail.com`);
+  function fetchMessages() {
+    const directUserEmail = `${params.email}@gmail.com`;
+    const direct = store.directs.get(directUserEmail);
 
-    if (room) {
-      return room.chats;
+    if (direct) {
+      return direct.chats;
     }
 
     return new Map<string, MessageType[]>();
@@ -29,10 +30,10 @@ function DirectChat() {
         <div class={styles.Messages} id="ChatMain">
           <div class={styles.EndOfMessages}>{"That's every message!"}</div>
           <Show
-            when={store.directs.has(`${params.email}@gmail.com`)}
+            when={store.directs.get(`${params.email}@gmail.com`)}
             fallback="loading..."
           >
-            <MessagesList messages={getMessages()} />
+            <MessagesList messages={fetchMessages()} />
           </Show>
         </div>
         <ChatInputForm />
