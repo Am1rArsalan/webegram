@@ -1,14 +1,14 @@
-import { useParams } from "solid-app-router";
-import { Show } from "solid-js";
-import styles from "./styles/Chat.module.css";
-import MessagesList from "./MessagesList";
-import ChatInputForm from "./ChatInputForm";
-import { useStore } from "../store";
-import { MessageType } from "../types/message";
+import { useParams } from 'solid-app-router';
+import { Show } from 'solid-js';
+import styles from './styles/Chat.module.css';
+import MessagesList from './MessagesList';
+import ChatInputForm from './ChatInputForm';
+import { useStore } from '../store';
+import { MessageType } from '../types/message';
 
 function DirectChat() {
   const params = useParams();
-  const [store] = useStore();
+  const [store, { sendMessage }] = useStore();
 
   function fetchMessages() {
     const directUserEmail = `${params.email}@gmail.com`;
@@ -22,21 +22,18 @@ function DirectChat() {
   }
 
   return (
-    <div class={styles.ChatContainer}>
+    <div class={[styles.ChatContainer, 'text-3xl'].join(' ')}>
       <div class={styles.ChatMain}>
         <div class={styles.ChatInfo}>
           <div class={styles.ChannelName}>#{`${params.email}@gmail.com`}</div>
         </div>
         <div class={styles.Messages} id="ChatMain">
           <div class={styles.EndOfMessages}>{"That's every message!"}</div>
-          <Show
-            when={store.directs.get(`${params.email}@gmail.com`)}
-            fallback="loading..."
-          >
+          <Show when={store.directs.get(`${params.email}@gmail.com`)} fallback="loading...">
             <MessagesList messages={fetchMessages()} />
           </Show>
         </div>
-        <ChatInputForm />
+        <ChatInputForm sendMessage={(content) => params.email && sendMessage(content, params.email)} />
       </div>
     </div>
   );
