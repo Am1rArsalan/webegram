@@ -12,7 +12,7 @@ import createDirects, { DirectsActions } from "./createDirects";
 import createSocketConnection, {
   SocketActions,
 } from "./createSocketConnection";
-import { RoomType } from "../types/rooms";
+import { RoomClientType } from "../types/rooms";
 import createRooms, { RoomActions } from "./createRooms";
 
 export type Actions = ProfileActions &
@@ -39,7 +39,7 @@ export function Provider(props: ParentProps) {
   let profile: Resource<ProfileType | undefined>;
   let users: Resource<UserType[] | undefined>;
   let directs: Resource<DirectsType | undefined>;
-  let rooms: Resource<RoomType[] | undefined>;
+  let rooms: Resource<RoomClientType[] | undefined>;
   let socketConnection: Accessor<boolean>;
 
   const queryParams = new URLSearchParams(location.search);
