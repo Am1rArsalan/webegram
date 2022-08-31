@@ -1,6 +1,4 @@
-import { useParams } from "solid-app-router";
 import { createSignal } from "solid-js";
-import { useStore } from "../store";
 import styles from "./styles/ChatInputForm.module.css";
 
 export function scrollToEndOfList() {
@@ -10,17 +8,19 @@ export function scrollToEndOfList() {
   }
 }
 
-function ChatInputForm() {
-  const [message, setMessage] = createSignal("");
-  const [_, { sendMessage }] = useStore();
-  const params = useParams();
+type Props = {
+  sendMessage(content: string): void;
+};
 
-  const handleSend = (ev: Event) => {
+function ChatInputForm(props: Props) {
+  const [message, setMessage] = createSignal("");
+
+  function handleSend(ev: Event) {
     ev.preventDefault();
     if (message().length === 0) return;
-    params.email && sendMessage(message(), params.email);
+    props.sendMessage(message());
     setMessage("");
-  };
+  }
 
   return (
     <form class={styles.ChatInputBox} onSubmit={handleSend}>
