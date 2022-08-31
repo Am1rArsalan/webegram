@@ -3,6 +3,7 @@ import { useParams } from "solid-app-router";
 import { For, createEffect } from "solid-js";
 import { useStore } from "../store";
 import { MessageType } from "../types/message";
+import { UserType } from "../types/user";
 import { MessageWithAvatar, MessageWithoutAvatar } from "./Chat";
 import { scrollToEndOfList } from "./ChatInputForm";
 import styles from "./styles/Chat.module.css";
@@ -16,6 +17,20 @@ function MessagesList(props: { messages: Map<string, MessageType[]> }) {
       scrollToEndOfList();
     }
   });
+
+  function getChattingUser(from: string) {
+    let chattingUser: UserType | undefined;
+    const activeDirect = store.directs.get(`${params.email}@gmail.com`);
+    if (params.email && activeDirect) {
+      chattingUser = activeDirect.receiver;
+    } else {
+      chattingUser = store.rooms
+        .find((room) => room.slug === params.slug)
+        ?.members.find((member) => member._id === from);
+    }
+
+    return chattingUser;
+  }
 
   return (
     <For each={[...props.messages]}>
@@ -37,22 +52,23 @@ function MessagesList(props: { messages: Map<string, MessageType[]> }) {
                 let withoutAvatar = previousMessage === message.from;
                 previousMessage = message.from;
                 const profile = store.profile;
-                const activeDirect = store.directs.get(
-                  `${params.email}@gmail.com`
-                )!;
                 if (!profile) return null;
+
+                const chattingUser = getChattingUser(message.from);
+                if (!chattingUser) return null;
+
                 return withoutAvatar ? (
                   <MessageWithoutAvatar>{message.content}</MessageWithoutAvatar>
                 ) : (
                   <MessageWithAvatar
                     image={
-                      activeDirect.receiver._id === message.from
-                        ? activeDirect.receiver.image
+                      chattingUser._id === message.from
+                        ? chattingUser.image
                         : profile.image
                     }
                     username={
-                      activeDirect.receiver._id === message.from
-                        ? activeDirect.receiver.displayName
+                      chattingUser._id === message.from
+                        ? chattingUser.displayName
                         : profile.displayName
                     }
                     createdAt={dayjs(message.created_at).format("HH:MM a")}
