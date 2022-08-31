@@ -1,13 +1,13 @@
-import { render } from "solid-js/web";
-import { createComputed } from "solid-js";
-import "./index.css";
-import App from "./screens/App";
-import { Provider, useStore } from "./store/";
-import { Router, Route, Routes } from "solid-app-router";
-import Auth from "./screens/Auth";
-import Welcome from "./components/Welcome";
-import Channel from "./components/Channel";
-import DirectChat from "./components/DirectChat";
+import { render } from 'solid-js/web';
+import { createComputed } from 'solid-js';
+import './index.css';
+import App from './screens/App';
+import { Provider, useStore } from './store/';
+import { Router, Route, Routes } from 'solid-app-router';
+import Auth from './screens/Auth';
+import Welcome from './components/Welcome';
+import Channel from './components/Channel';
+import DirectChat from './components/DirectChat';
 
 const AppWithAuth = () => {
   const [store, { loadProfile }] = useStore();
@@ -36,5 +36,5 @@ render(
       </Router>
     </Provider>
   ),
-  document.getElementById("root") as HTMLElement
+  document.getElementById('root') as HTMLElement
 );

@@ -1,8 +1,8 @@
-import { createSignal, For } from "solid-js";
-import { Popover } from "solid-popover";
-import { useStore } from "../store";
-import { UserType } from "../types/user";
-import styles from "./styles/Search.module.css";
+import { createSignal, For } from 'solid-js';
+import { Popover } from 'solid-popover';
+import { useStore } from '../store';
+import { UserType } from '../types/user';
+import styles from './styles/Search.module.css';
 
 type Props = {
   action: (user: UserType) => void;
@@ -10,7 +10,7 @@ type Props = {
 };
 
 function Search(props: Props) {
-  const [value, setValue] = createSignal("");
+  const [value, setValue] = createSignal('');
   const [store, { updateSearchQuery, resetSearchedUsers }] = useStore();
 
   let searchInputRef: HTMLInputElement | undefined;
@@ -22,14 +22,14 @@ function Search(props: Props) {
   return (
     <Popover
       isOpen={isPopoverOpen()}
-      positions={["bottom", "right", "left", "top"]}
+      positions={['bottom', 'right', 'left', 'top']}
       parentElement={props.containerRef}
       spacing={10}
       containerStyle={{
-        background: "white",
-        border: "1px solid #eee",
-        padding: ".4rem 0",
-        borderRadius: "4px",
+        background: 'white',
+        border: '1px solid #eee',
+        padding: '.4rem 0',
+        borderRadius: '4px',
       }}
       content={
         <ul class={styles.UsersList}>
@@ -40,7 +40,7 @@ function Search(props: Props) {
                   <li
                     onClick={() => {
                       props.action(user);
-                      setValue("");
+                      setValue('');
                       resetSearchedUsers();
                     }}
                     class={styles.UserListItem}

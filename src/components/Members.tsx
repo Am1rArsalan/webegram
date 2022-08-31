@@ -1,8 +1,8 @@
-import { classNames } from "./UI/utils/classNames";
-import styles from "./styles/Members.module.css";
-import Search from "./Search";
-import { For, ParentProps } from "solid-js";
-import { useStore } from "../store";
+import { classNames } from './UI/utils/classNames';
+import styles from './styles/Members.module.css';
+import Search from './Search';
+import { For, ParentProps, Show } from 'solid-js';
+import { useStore } from '../store';
 
 function Member(props: ParentProps) {
   return (
@@ -30,19 +30,27 @@ function Members(props: { slug: string }) {
   return (
     <div class={styles.Members} ref={containerRef}>
       <div>
-        <h5>add member form</h5>
-        <Search
-          action={(data) =>
-            addMember({
-              memberId: data._id,
-              roomSlug: props.slug,
-              memberName: data.displayName,
-            })
+        <Show
+          when={
+            store.profile?._id ===
+            store.rooms[store.rooms.findIndex((room) => room.slug === props.slug)]?.admin
           }
-          containerRef={containerRef}
-        />
+        >
+          <h5>add member form</h5>
+          <Search
+            action={(data) =>
+              addMember({
+                memberId: data._id,
+                roomSlug: props.slug,
+                memberName: data.displayName,
+              })
+            }
+            containerRef={containerRef}
+          />
+        </Show>
       </div>
       <div>
+        <h5 style={{ 'margin-bottom': '.5rem' }}> members : </h5>
         <For each={getRoomMembers()}>
           {(member) => {
             return <Member>{member.displayName}</Member>;
