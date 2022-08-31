@@ -1,20 +1,18 @@
 import { createResource, createSignal } from "solid-js";
 import type { Resource } from "solid-js";
-import {
-  DirectApiType,
-  DirectsType,
-  generateDirectItem,
-  generateDirectsMap,
-} from "../types/directs";
+import { DirectApiType, DirectsType } from "../types/directs";
 import { Actions } from ".";
 import { DirectsAgent } from "./agent/directs-agent/DirectsAgent";
 import { StoreType } from "../types/store";
 import { scrollToEndOfList } from "../components/ChatInputForm";
 import { MessageType } from "../types/message";
 import dayjs from "dayjs";
+import {
+  generateDirectItem,
+  generateDirectsMap,
+} from "../utils/helpers/directs";
 
 // TODO : fix any
-
 export interface DirectsActions {
   addToDirects(userEmail: string, userId: string): void;
   loadDirects(value: string | null): void;
@@ -63,6 +61,7 @@ export default function createDirects(
       mutate(directsMapClone);
       scrollToEndOfList();
     },
+
     async addToDirects(userEmail: string, userId: string) {
       const directsMap = new Map(directs());
       if (directsMap && !directsMap.has(userEmail)) {
@@ -81,6 +80,7 @@ export default function createDirects(
         }
       }
     },
+
     async receiveDirect(addedDirect) {
       const directsMap = new Map(directs());
       const receiver =
