@@ -24,18 +24,17 @@ function Members(props: { slug: string }) {
     }
 
     const room = store.rooms[roomIndex];
-
     return room.members;
   }
+
+  function checkAdmin(userId?: string) {
+    return userId === store.rooms[store.rooms.findIndex((room) => room.slug === props.slug)]?.admin;
+  }
+
   return (
     <div class={styles.Members} ref={containerRef}>
       <div>
-        <Show
-          when={
-            store.profile?._id ===
-            store.rooms[store.rooms.findIndex((room) => room.slug === props.slug)]?.admin
-          }
-        >
+        <Show when={checkAdmin(store.profile?._id)}>
           <h5>add member form</h5>
           <Search
             action={(data) =>
@@ -53,7 +52,11 @@ function Members(props: { slug: string }) {
         <h5 style={{ 'margin-bottom': '.5rem' }}> members : </h5>
         <For each={getRoomMembers()}>
           {(member) => {
-            return <Member>{member.displayName}</Member>;
+            return (
+              <Member>
+                {member.displayName} {checkAdmin(member._id) && '(admin)'}
+              </Member>
+            );
           }}
         </For>
       </div>
