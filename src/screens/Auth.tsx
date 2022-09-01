@@ -1,5 +1,5 @@
-import { Button } from "../components/UI/button";
-import styles from "./styles/App.module.css";
+import { Button } from '../components/UI/button';
+import styles from './styles/Auth.module.css';
 
 function Auth() {
   return (
