@@ -1,10 +1,10 @@
 import { useParams } from 'solid-app-router';
-import { createEffect, onCleanup, onMount, Show } from 'solid-js';
-import styles from './styles/Chat.module.css';
+import { createEffect, onCleanup, Show } from 'solid-js';
 import MessagesList from './MessagesList';
 import ChatInputForm from './ChatInputForm';
 import { useStore } from '../store';
 import { MessageType } from '../types/message';
+import styles from './styles/Chat.module.css';
 
 function DirectChat() {
 	const params = useParams();
