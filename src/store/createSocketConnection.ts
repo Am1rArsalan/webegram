@@ -63,7 +63,7 @@ export default function createSocketConnection(state: StoreType, actions: Action
 	});
 
 	socket.on('direct:message-failed', (message) => {
-		console.log(message);
+		// TODO
 	});
 
 	socket.on('direct:new', (data) => {
@@ -72,8 +72,6 @@ export default function createSocketConnection(state: StoreType, actions: Action
 
 	socket.on('isTyping', (data) => {
 		if (!data.target) return;
-		console.log('selected channel', state.selectedChannel);
-		console.log('selected Direct', state.selectedDirect);
 
 		const isDirect = location.pathname.startsWith('/user');
 		if (isDirect && data.target === state.selectedDirect) {
@@ -142,7 +140,6 @@ export default function createSocketConnection(state: StoreType, actions: Action
 		},
 
 		resetIsTypingEvent() {
-			//
 			setSocketSignal({
 				...socketSignal(),
 				isTyping: false,
