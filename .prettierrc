@@ -1,6 +1,6 @@
 {
   "printWidth": 110,
-  "useTabs": false,
+  "useTabs": true,
   "singleQuote": true,
   "importOrderSeparation": false,
   "experimentalBabelParserPluginsList": ["jsx", "typescript", "tsx"]
