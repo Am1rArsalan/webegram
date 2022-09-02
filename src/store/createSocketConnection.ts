@@ -29,6 +29,7 @@ export default function createSocketConnection(state: StoreType, actions: Action
 	const [socketSignal, setSocketSignal] = createSignal({
 		connectionStatus: socket.connected,
 		isTyping: false,
+		onlineUsers: {},
 	});
 
 	onCleanup(() => {
@@ -39,6 +40,20 @@ export default function createSocketConnection(state: StoreType, actions: Action
 		setSocketSignal({
 			...socketSignal(),
 			connectionStatus: true,
+		});
+	});
+
+	socket.on('online', (data) => {
+		setSocketSignal({
+			...socketSignal(),
+			onlineUsers: data,
+		});
+	});
+
+	socket.on('offline', (data) => {
+		setSocketSignal({
+			...socketSignal(),
+			onlineUsers: data,
 		});
 	});
 
@@ -55,6 +70,7 @@ export default function createSocketConnection(state: StoreType, actions: Action
 	});
 
 	socket.on('direct:message-received', (createdMessage) => {
+		console.log('direct:message-received');
 		actions.addMessage(createdMessage);
 	});
 
