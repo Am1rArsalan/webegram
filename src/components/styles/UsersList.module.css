@@ -1,5 +1,6 @@
 .DirectChat {
 	all: unset;
+	padding: 0 1rem;
 }
 
 .ActiveDirectChat {
@@ -20,6 +21,7 @@
 	flex-direction: column;
 	gap: 1rem;
 	margin: 1rem 0;
+	padding: 0;
 }
 
 .UserStatus {
