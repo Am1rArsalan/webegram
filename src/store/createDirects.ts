@@ -4,7 +4,6 @@ import { DirectApiType, DirectsType } from '../types/directs';
 import { Actions } from '.';
 import { DirectsAgent } from './agent/directs-agent/DirectsAgent';
 import { StoreType } from '../types/store';
-import { scrollToEndOfList } from '../components/ChatInputForm';
 import { MessageType } from '../types/message';
 import dayjs from 'dayjs';
 import { generateDirectItem, generateDirectsMap } from '../utils/helpers/directs';
@@ -36,6 +35,7 @@ export default function createDirects(
 		loadDirects(value: string | null) {
 			setDirectsSource(value);
 		},
+
 		addMessage(createdMessage: MessageType) {
 			const directsMapClone = new Map(directs());
 			const createdDate = dayjs(createdMessage.created_at).format('YYYY/MM/DD');
@@ -47,7 +47,6 @@ export default function createDirects(
 				}
 			});
 			mutate(directsMapClone);
-			scrollToEndOfList();
 		},
 
 		async addToDirects(userEmail: string, userId: string) {

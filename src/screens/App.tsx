@@ -1,5 +1,5 @@
-import { Outlet, useNavigate } from 'solid-app-router';
-import { createComputed, lazy, onCleanup, Show } from 'solid-js';
+import { Outlet, useNavigate } from '@solidjs/router';
+import { createComputed, createSignal, lazy, Show } from 'solid-js';
 import { useStore } from '../store';
 import styles from './styles/App.module.css';
 
@@ -7,22 +7,25 @@ const Sidebar = lazy(() => import('../components/Sidebar'));
 
 function App() {
 	const nav = useNavigate();
-	const [store, { resetSocketConnection, loadDirects, loadRooms }] = useStore();
+	const [store, { loadDirects, loadRooms }] = useStore();
+	const [contentLoaded, setContentLoaded] = createSignal(false);
 
 	if (!store.token) {
 		nav('/auth');
+	} else {
+		const currUser = store.profile?.email ? store.profile.email : null;
+		createComputed(() => {
+			loadDirects(currUser);
+			loadRooms(currUser);
+
+			// TODO: Change this later ...
+			if (store.rooms.length > 0) {
+				setContentLoaded(true);
+			}
+		});
 	}
 
-	createComputed(() => {
-		const currUser = store.profile?.email ? store.profile.email : null;
-		loadDirects(currUser);
-		loadRooms(currUser);
-	});
-
-	onCleanup(() => {
-		store.socket.connectionStatus && resetSocketConnection();
-	});
-
+	// TODO use skeleton instead of loading....
 	return (
 		<div class={styles.App}>
 			<Sidebar />
@@ -32,7 +35,9 @@ function App() {
 			>
 				<h2 class={styles.socketConnection}> connected </h2>
 			</Show>
-			<Outlet />
+			<Show when={contentLoaded()}>
+				<Outlet />
+			</Show>
 		</div>
 	);
 }
