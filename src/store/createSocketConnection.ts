@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import { createSignal, onCleanup } from 'solid-js';
+import { createSignal } from 'solid-js';
 import { Actions } from '.';
 import { SOCKET_URL } from '../constants/api';
 import { DirectApiType } from '../types/directs';
@@ -30,10 +30,6 @@ export default function createSocketConnection(state: StoreType, actions: Action
 		connectionStatus: socket.connected,
 		isTyping: false,
 		onlineUsers: {},
-	});
-
-	onCleanup(() => {
-		if (timeout) clearTimeout(timeout);
 	});
 
 	socket.on('connect', () => {
@@ -70,7 +66,6 @@ export default function createSocketConnection(state: StoreType, actions: Action
 	});
 
 	socket.on('direct:message-received', (createdMessage) => {
-		console.log('direct:message-received');
 		actions.addMessage(createdMessage);
 	});
 
@@ -114,21 +109,18 @@ export default function createSocketConnection(state: StoreType, actions: Action
 
 		sendChannelMessage(content, channelSlug) {
 			const room = state.rooms.find((room) => room.slug === channelSlug);
-			if (!room) return;
+			if (!room || content.length < 1) return;
 
-			if (content.length > 0) {
-				socket.emit('room:message-send', {
-					from: state?.profile?._id,
-					content,
-					room,
-				});
-			}
+			socket.emit('room:message-send', {
+				from: state?.profile?._id,
+				content,
+				room,
+			});
 		},
 
 		sendMessage(content, to) {
 			const direct = state.directs.get(`${to}@gmail.com`);
 			if (!direct || content.length < 1) return;
-
 			socket.emit('direct:message-send', {
 				from: state?.profile?._id,
 				to,
