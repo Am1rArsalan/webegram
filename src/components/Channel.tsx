@@ -1,5 +1,5 @@
-import { useParams } from 'solid-app-router';
-import { createEffect, createSignal, onCleanup, onMount, Show } from 'solid-js';
+import { createEffect, createRenderEffect, onCleanup, onMount, Show } from 'solid-js';
+import { useParams } from '@solidjs/router';
 import ChatInputForm from './ChatInputForm';
 import Members from './Members';
 import MessagesList from './MessagesList';
@@ -13,22 +13,27 @@ function Channel() {
 		store,
 		{ sendChannelMessage, joinRoom, updateIsTypingEvent, updateSelectedChannel, resetIsTypingEvent },
 	] = useStore();
+	let chatScrollContainer: HTMLDivElement | undefined;
 
-	createEffect(() => {
-		console.log('in createEffect [ Channel ]');
-		const channel = store.rooms.find((item) => item.slug == params.slug);
+	onMount(() => {
+		updateSelectedChannel(params.slug);
 
-		if (!channel) {
-			return;
-		}
+		// FIXMe: this should be map not array
+		const channel = store.rooms.find((c) => c.slug === params.slug);
+		if (!channel) return;
 
 		joinRoom(channel._id);
-		updateSelectedChannel(channel.slug);
 	});
 
 	onCleanup(() => {
 		updateSelectedChannel();
 		resetIsTypingEvent();
+	});
+
+	createEffect(() => {
+		if (chatScrollContainer && params.slug) {
+			chatScrollContainer.scrollTop = chatScrollContainer.scrollHeight;
+		}
 	});
 
 	function fetchMessages() {
@@ -47,7 +52,7 @@ function Channel() {
 				<div class={styles.ChatInfo}>
 					<div class={styles.ChannelName}>#{params.slug}</div>
 				</div>
-				<div class={styles.Messages}>
+				<div class={styles.Messages} ref={chatScrollContainer}>
 					<div class={styles.EndOfMessages}>{"That's every message!"}</div>
 					<Show when={store.rooms.find((item) => item.slug == params.slug)}>
 						<MessagesList messages={fetchMessages()} />
@@ -57,6 +62,9 @@ function Channel() {
 					handleIsTypingEvent={() => updateIsTypingEvent('GP')}
 					sendMessage={(content) => {
 						params.slug && sendChannelMessage(content, params.slug);
+						if (chatScrollContainer) {
+							chatScrollContainer.scrollTop = chatScrollContainer.scrollHeight;
+						}
 					}}
 				>
 					<Show when={store.socket.isTyping}>
