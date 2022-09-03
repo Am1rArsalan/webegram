@@ -38,6 +38,7 @@ const StoreContext = createContext<StoreContextType>([
 		socket: {
 			connectionStatus: false,
 			isTyping: false,
+			onlineUsers: {},
 		},
 	},
 	Object({}),
