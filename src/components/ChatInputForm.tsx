@@ -1,5 +1,6 @@
 import { createSignal, ParentProps } from 'solid-js';
 import styles from './styles/ChatInputForm.module.css';
+//import { IconButton } from './UI/button';
 
 type Props = {
 	sendMessage(content: string): void;
@@ -8,7 +9,6 @@ type Props = {
 
 function ChatInputForm(props: ParentProps<Props>) {
 	const [message, setMessage] = createSignal('');
-	// TODO: fix this type
 
 	function handleSend(ev: Event) {
 		ev.preventDefault();
@@ -24,23 +24,21 @@ function ChatInputForm(props: ParentProps<Props>) {
 
 	return (
 		<form class={styles.ChatInputBox} onSubmit={handleSend}>
-			<input
-				value={message()}
-				onChange={onChange}
-				onInput={() => props.handleIsTypingEvent()}
-				class={styles.ChatInput}
-				placeholder="Message #general"
-			/>
-			{props.children}
+			<div class={styles.ChatInputWrapper}>
+				<input
+					value={message()}
+					onChange={onChange}
+					onInput={() => props.handleIsTypingEvent()}
+					class={styles.ChatInput}
+					placeholder="Write your message"
+				/>
+				{/*	<IconButton>
+					<Location fill={'#000'} width={30} height={30} />
+				</IconButton>*/}
+			</div>
+			<div class={styles.ChatIsTypingWrapper}>{props.children}</div>
 		</form>
 	);
-}
-
-export function scrollToEndOfList() {
-	const chatContainer = document.querySelector('#ChatMain');
-	if (chatContainer) {
-		chatContainer.scrollTop = chatContainer.scrollHeight;
-	}
 }
 
 export default ChatInputForm;
