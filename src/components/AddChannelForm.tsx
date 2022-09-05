@@ -1,4 +1,4 @@
-import { createSignal, ParentProps } from 'solid-js';
+import { createSignal } from 'solid-js';
 import { useStore } from '../store';
 import styles from './styles/AddChannelForm.module.css';
 import { Button } from './UI/button';
