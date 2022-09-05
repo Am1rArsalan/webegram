@@ -7,6 +7,7 @@ import { modifyRoomsApiData, RoomClientType } from '../types/rooms';
 import { reshapeChats } from '../utils/helpers/reshapeChats';
 import { MessageType } from '../types/message';
 import dayjs from 'dayjs';
+import { UserType } from '../types/user';
 
 export interface RoomActions {
 	createRoom(groupName: string, slug: string): void;
@@ -58,7 +59,7 @@ export default function createRooms(state: StoreType, actions: Actions, agent: R
 				{
 					_id: data.memberId,
 					displayName: data.memberName,
-				},
+				} as UserType,
 			];
 
 			prev[foundedRoomIndex] = foundedRoom;
