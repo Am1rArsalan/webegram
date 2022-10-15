@@ -1,4 +1,4 @@
-import { Component, mergeProps, splitProps } from "solid-js";
+import { mergeProps, splitProps } from "solid-js";
 import styles from "./Button.module.css";
 import { classNames } from "../utils/classNames";
 import { ElementType, HtmlProps } from "../../../types/helper";
@@ -6,8 +6,6 @@ import { ElementType, HtmlProps } from "../../../types/helper";
 export type IconButtonProps<C extends ElementType = "button"> = HtmlProps<C>;
 
 export function IconButton(props: IconButtonProps) {
-  const { children } = props;
-
   const propsWithDefault: IconButtonProps<"button"> = mergeProps(props);
 
   const [local, _, others] = splitProps(
@@ -22,7 +20,7 @@ export function IconButton(props: IconButtonProps) {
 
   return (
     <button class={classes()} disabled={local.disabled} {...others}>
-      {children}
+      {props.children}
     </button>
   );
 }
