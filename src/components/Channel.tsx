@@ -1,4 +1,4 @@
-import { createEffect, createRenderEffect, onCleanup, onMount, Show } from 'solid-js';
+import { createEffect, onCleanup, onMount, Show } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import ChatInputForm from './ChatInputForm';
 import Members from './Members';
