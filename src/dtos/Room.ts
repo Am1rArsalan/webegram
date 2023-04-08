@@ -1,10 +1,10 @@
 export type CreateRoomDto = {
-  name: string;
-  slug: string;
+	name: string;
+	slug: string;
 };
 
 export type AddMemberDto = {
-  memberId: string;
-  roomSlug: string;
-  memberName: string;
+	memberId: string;
+	roomSlug: string;
+	memberName: string;
 };

@@ -1,10 +1,6 @@
-import {
-	DirectApiType,
-	DirectsApiType,
-	DirectsType,
-} from "../../types/directs";
-import { UserType } from "../../types/user";
-import { reshapeChats } from "./reshapeChats";
+import { DirectApiType, DirectsApiType, DirectsType } from '../../types/directs';
+import { UserType } from '../../types/user';
+import { reshapeChats } from './reshapeChats';
 
 export function generateDirectsMap(
 	directsApiData: DirectsApiType,

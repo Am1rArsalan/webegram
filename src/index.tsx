@@ -32,7 +32,13 @@ const AppWithAuth = () => {
 	return (
 		<Show when={appLoaded()}>
 			<Routes>
-				<Route path="/" component={App}>
+				<Route
+					path="/"
+					component={App}
+					data={() => {
+						/// ...
+					}}
+				>
 					<Route path="channel/:slug" component={Channel} />
 					<Route path="user/:email" component={DirectChat} />
 					<Route path="*" component={Welcome} />

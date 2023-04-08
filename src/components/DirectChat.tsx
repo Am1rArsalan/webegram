@@ -30,6 +30,7 @@ function DirectChat() {
 		resetIsTypingEvent();
 	});
 
+	/// scrolling to bottom of the page
 	createEffect(() => {
 		if (chatScrollContainer && params.email) {
 			chatScrollContainer.scrollTop = chatScrollContainer.scrollHeight;

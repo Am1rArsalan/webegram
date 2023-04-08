@@ -1,28 +1,28 @@
 .Members {
-  padding: 20px;
-  border-left: solid 1px #ccc;
-  width: 15rem;
-  display: flex;
-  gap: 1rem;
-  flex-direction: column;
+	padding: 20px;
+	border-left: solid 1px #ccc;
+	width: 15rem;
+	display: flex;
+	gap: 1rem;
+	flex-direction: column;
 }
 
 .Member {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .MemberStatus {
-  margin-right: 5px;
-  border-radius: 50%;
-  height: 0.66em;
-  width: 0.66em;
+	margin-right: 5px;
+	border-radius: 50%;
+	height: 0.66em;
+	width: 0.66em;
 }
 
 .MemberStatus.online {
-  background: hsl(110, 50%, 50%);
+	background: hsl(110, 50%, 50%);
 }
 
 .MemberStatus.offline {
-  background: hsl(10, 0%, 70%);
+	background: hsl(10, 0%, 70%);
 }

@@ -3,6 +3,7 @@ import { createComputed, createSignal, lazy, Show } from 'solid-js';
 import { useStore } from '../store';
 import styles from './styles/App.module.css';
 
+// Why ....
 const Sidebar = lazy(() => import('../components/Sidebar'));
 
 function App() {
@@ -15,6 +16,9 @@ function App() {
 	} else {
 		const currUser = store.profile?.email ? store.profile.email : null;
 		createComputed(() => {
+			// ****
+			// this is wrong
+			// ****
 			loadDirects(currUser);
 			loadRooms(currUser);
 

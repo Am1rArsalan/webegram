@@ -1,42 +1,42 @@
 .Message {
-  margin: 5px 0;
-  display: flex;
+	margin: 5px 0;
+	display: flex;
 }
 
 .Message.withAvatar {
-  display: flex;
-  margin-top: 1rem;
+	display: flex;
+	margin-top: 1rem;
 }
 
-.MessageContent[aria-disabled="true"] {
-  opacity: 0.1;
-  background-color: red;
+.MessageContent[aria-disabled='true'] {
+	opacity: 0.1;
+	background-color: red;
 }
 
 .Message.noAvatar {
-  margin-left: 3.8rem;
+	margin-left: 3.8rem;
 }
 
 .Avatar {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 3px;
-  background-size: cover;
-  background-position: center center;
-  background-color: #fefefe;
-  position: relative;
+	width: 3rem;
+	height: 3rem;
+	border-radius: 3px;
+	background-size: cover;
+	background-position: center center;
+	background-color: #fefefe;
+	position: relative;
 }
 
 .Author {
-  margin-left: 1rem;
+	margin-left: 1rem;
 }
 
 .UserName {
-  font-weight: bold;
-  font-size: 90%;
+	font-weight: bold;
+	font-size: 90%;
 }
 
 .TimeStamp {
-  color: #999;
-  font-size: 80%;
+	color: #999;
+	font-size: 80%;
 }

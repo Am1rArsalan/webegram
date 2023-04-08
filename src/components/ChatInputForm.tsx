@@ -18,8 +18,7 @@ function ChatInputForm(props: ParentProps<Props>) {
 	}
 
 	function onChange(ev: Event) {
-		//@ts-ignore
-		setMessage(ev.currentTarget.value);
+		setMessage(ev.target.value);
 	}
 
 	return (
@@ -32,9 +31,11 @@ function ChatInputForm(props: ParentProps<Props>) {
 					class={styles.ChatInput}
 					placeholder="Write your message"
 				/>
-				{/*	<IconButton>
-					<Location fill={'#000'} width={30} height={30} />
-				</IconButton>*/}
+				{/*	
+                    <IconButton>
+                       <Location fill={'#000'} width={30} height={30} />
+                    </IconButton>
+                */}
 			</div>
 			<div class={styles.ChatIsTypingWrapper}>{props.children}</div>
 		</form>
