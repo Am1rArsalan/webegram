@@ -1,37 +1,35 @@
+Webegram
 
-# Webegram
+Welcome to Webegram, a communication platform designed to facilitate interactions through chat, voice, and video functionalities. Our goal is to provide a versatile solution for both personal and professional communication needs, with features ranging from basic chat to group conversations and multimedia sharing.
+Features
 
-Welcome to Webegram, a cutting-edge communication platform designed to facilitate seamless interactions through chat, voice, and video functionalities. Our platform aims to provide a comprehensive solution for both personal and professional communication needs, incorporating a range of features from basic chat to advanced group conversations and multimedia sharing.
+Webegram is currently under active development. Below are the features that have been implemented so far and others that are planned:
+Current Features
 
-## Features
+    Frontend Setup: The foundational structure of our frontend application is established.
+    Authentication (Frontend): A secure authentication system is in place for user access and registration.
+    Socket Integration: Real-time communication is enabled through web sockets.
+    Direct Messaging: One-on-one chat functionality is available.
+    Group Chat: Allows multiple users to communicate within a single chat room.
 
-Webegram is in active development, with the following features already implemented and others on the roadmap:
+Upcoming Features
 
-### Current Features
+    Voice Messages: (In development) Users will be able to send voice messages in personal and group chats.
+    Screen Sharing (Desktop Only): (Planned) Desktop users will have the option to share their screens, enhancing collaboration.
+    Voice Calls: (Planned) Users will be able to initiate voice calls to individuals or groups.
+    Voice Chat Rooms: (Planned) Audio-based chat rooms will provide an additional communication channel.
 
-- **Initialize the Project (Frontend):** The foundation of our frontend application is set up and ready.
-- **Authentication (Frontend):** Secure authentication system to manage user access and registration.
-- **Socket Integration:** Real-time communication capabilities through web sockets.
-- **2 User Chat:** Direct messaging functionality for one-on-one conversations.
-- **Group Chat:** Enables multiple users to join and communicate within a single chat room.
+Improvements
 
-### Upcoming Features
+    UI Enhancement Part-1: (In progress) Ongoing improvements to the user interface to make it more intuitive and engaging.
+    UI Enhancement Part-2: (Planned) Further refinements to the UI, focusing on usability and visual appeal.
 
-- **Sending Voice Messages:** (In development) Allow users to send voice messages in both personal and group chats.
-- **Screen Sharing (Desktop Only):** (Planned) Share your screen with other users, enhancing collaboration (available only for desktop versions).
-- **Voice Call:** (Planned) Initiate voice calls to individual users or groups.
-- **Voice Chat:** (Planned) Engage in voice chat rooms, providing an audio-based communication channel.
+Installation
 
-### Improvements
+To set up and run the project locally, follow these steps. Ensure that you have all necessary prerequisites and dependencies installed.
 
-- **Improve UI Part-1:** (In progress) Enhancements to the user interface for a more intuitive and engaging experience.
-- **Improve UI Part-2:** (Planned) Further improvements to the UI, focusing on usability and visual appeal.
+bash
 
-## Installation
-
-Provide detailed instructions on how to set up and run your project locally. Include any prerequisites, dependencies, and steps to clone the repository and start the application.
-
-```bash
 # Clone the repository
 git clone <repository-url>
 
@@ -43,27 +41,19 @@ npm install
 
 # Start the application
 npm start
-```
 
-## Usage
+Usage
 
-Briefly explain how to use the application or how to perform key tasks. This could include instructions for logging in, starting a chat, or any other core functionality.
+Provide instructions for using the application, including key tasks such as logging in, starting a chat, or other core functionalities.
+Contributing
 
-## Contributing
+We welcome contributions to Webegram! If you're interested in contributing, please review our contributing guidelines. To get started, fork the repository, make your changes, and submit a pull request.
+License
 
-We welcome contributions to Webegram! If you're interested in helping, please take a look at our contributing guidelines. To get started, simply fork the repository, make your changes, and submit a pull request.
+This project is licensed under the MIT License, detailing the terms for using, modifying, and distributing the software.
 
-## License
-
-Specify the license under which your project is released, which informs users of their rights to use, modify, and distribute your software.
-
-```
 MIT License
-```
 
-## Contact
+Contact
 
-For support, feature requests, or contributions, please reach out to us via [GitHub Issues](github.com/Am1rArsalan/webegram/issues) or [email].
-
-
-
+For support, feature requests, or contributions, please reach out via GitHub Issues or email.
